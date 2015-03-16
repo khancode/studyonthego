@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +19,7 @@ import android.os.AsyncTask;
 public class GetStudyGroups extends AsyncTask<String, Void, Void>
 {	
 	
-	private ArrayList<StudyGroup> studyGroups;
+	private StudyGroup[] studyGroups;
 	private SearchStudyGroupsFragment searchStudyGroupFragment;
 	
 	public GetStudyGroups(SearchStudyGroupsFragment instance)
@@ -78,13 +77,13 @@ public class GetStudyGroups extends AsyncTask<String, Void, Void>
 		{
 			JSONArray jArray = new JSONArray(response.toString());
 		
-			studyGroups = new ArrayList<StudyGroup>();
+			studyGroups = new StudyGroup[jArray.length()];
 			
 			for(int i = 0; i < jArray.length(); i++)
 			{
 			   JSONObject jsonObject = jArray.getJSONObject(i);
 	
-			   studyGroups.add(new StudyGroup(jsonObject));
+			   studyGroups[i] = new StudyGroup(jsonObject);
 			}
 		}
 		catch (JSONException e) {
