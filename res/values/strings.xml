@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Study On-The-Go</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- activity_main.xml -->
+    <string name="username_label">Username:</string>
+    <string name="password_label">Password:</string>
+    <string name="login_button_label">Login</string>
+    <string name="title_activity_app_core">AppCoreActivity</string>
+
+</resources>
