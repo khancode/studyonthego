@@ -10,5 +10,12 @@
     <string name="password_label">Password:</string>
     <string name="login_button_label">Login</string>
     <string name="title_activity_app_core">AppCoreActivity</string>
+    
+    <!-- activity_search_study_groups.xml -->
+    
+    <!-- row_study_group.xml -->
+   	<string name="group_name"><b><u>Group Name</u></b></string>
+   	<string name="course"><b><u>Course</u></b></string>
+   	<string name="building"><b><u>Building</u></b></string>
 
 </resources>

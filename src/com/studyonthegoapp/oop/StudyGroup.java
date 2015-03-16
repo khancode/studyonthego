@@ -50,6 +50,9 @@ public class StudyGroup {
 	public int getGroupId() { return this.groupId; }
 	public String getGroupName() { return this.groupName; }
 	public String getAdmin() { return this.admin; }
+	public int getCourseId() { return this.courseId; }
+	public String getDescription() { return this.description; }
+	public String getBuilding() { return this.building; }
 	
 	@Override
 	public String toString()

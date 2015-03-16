@@ -1,7 +1,5 @@
 package com.studyonthegoapp.fragment;
 
-import java.util.List;
-
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.StudyGroup;
@@ -16,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class SearchStudyGroupsFragment extends Fragment {
 	
@@ -41,57 +40,76 @@ public class SearchStudyGroupsFragment extends Fragment {
 	{	
 		this.studyGroups = studyGroups;
 		
+		// DEBUG PURPOSES: printing result
 		for (int i = 0; i < this.studyGroups.length; i++)
 		{
 			StudyGroup group = this.studyGroups[i];
 			
 			Log.d("receiveGetStudyGroupsResultFromMySQL()", group.toString() + "\n");
 		}
-		
-//		final ListView listview = (ListView) findViewById(R.id.listview);
-//	    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-//	        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//	        "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-//	        "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-//	        "Android", "iPhone", "WindowsMobile" };
-//
-//	    final ArrayList<String> list = new ArrayList<String>();
-//	    for (int i = 0; i < values.length; ++i) {
-//	      list.add(values[i]);
-//	    }
-	    final StableArrayAdapter adapter = new StableArrayAdapter(getActivity(),
-	        android.R.layout.simple_list_item_1, this.studyGroups);
+
+		// Add to list view
+	    final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(getActivity(), this.studyGroups);
 	    listView.setAdapter(adapter);
 	}
 	
-	private class StableArrayAdapter extends ArrayAdapter<StudyGroup> {
+	private class MySimpleArrayAdapter extends ArrayAdapter<StudyGroup> {
 
-//	    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+	    Context context;
+	    StudyGroup[] values;
+
+	    public MySimpleArrayAdapter(Context context, StudyGroup[] values) {
+	        super(context, R.layout.row_study_group, values);
+	        this.context = context;
+	        this.values = values;
+	    }
 	    
-	    StudyGroup[] groups;
-
-	    public StableArrayAdapter(Context context, int textViewResourceId, StudyGroup[] objects)
-	    {
-		  super(context, textViewResourceId, objects);
-		  
-		  this.groups = objects;
-		  
-//		  for (int i = 0; i < objects.size(); ++i) {
-//		    mIdMap.put(objects.get(i), i);
+	    class ViewHolder {
+	    	TextView groupNameTV;
+	    	TextView courseTV;
+	    	TextView buildingTV;
+	    }
+	    
+	    @Override
+	    public View getView(int position, View convertView, ViewGroup parent) {
+	    	
+	    	View rowView = convertView;
+	    	// reuse views
+	    	if (rowView == null) {
+	    		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	    		rowView = inflater.inflate(R.layout.row_study_group, parent, false);
+	    		// configure view holder
+	    		ViewHolder viewHolder = new ViewHolder();
+	    		viewHolder.groupNameTV = (TextView) rowView.findViewById(R.id.groupNameTextView);
+	    		viewHolder.courseTV = (TextView) rowView.findViewById(R.id.courseTextView);
+	    		viewHolder.buildingTV = (TextView) rowView.findViewById(R.id.buildingTextView);
+	    		rowView.setTag(viewHolder);
+	    	}
+	    	
+	    	// fill data
+	    	ViewHolder holder = (ViewHolder) rowView.getTag();
+	    	StudyGroup group = values[position];
+	    	holder.groupNameTV.setText(group.getGroupName());
+	    	holder.courseTV.setText(Integer.toString(group.getCourseId()));
+	    	holder.buildingTV.setText(group.getBuilding());
+	    	
+//		  TextView groupNameTV = (TextView) rowView.findViewById(R.id.groupNameTextView);
+//		  groupNameTV.setText(values[position].getGroupName());
+//		  TextView courseTV = (TextView) rowView.findViewById(R.id.courseTextView);
+//		  courseTV.setText(Integer.toString(values[position].getCourseId()));
+//		  TextView textView = (TextView) rowView.findViewById(R.id.buildingTextView);
+//		  textView.setText(values[position].getBuilding());
+		  // Change the icon for Windows and iPhone
+//		  String s = values[position];
+//		  if (s.startsWith("Windows7") || s.startsWith("iPhone")
+//		  || s.startsWith("Solaris")) {
+//		    imageView.setImageResource(R.drawable.no);
+//		  } else {
+//		    imageView.setImageResource(R.drawable.ok);
 //		  }
+		
+		  return rowView;
 	    }
-
-	    @Override
-	    public long getItemId(int position) {
-//	      String item = getItem(position);
-	      return position;//mIdMap.get(item);
-	    }
-
-	    @Override
-	    public boolean hasStableIds() {
-	      return true;
-	    }
-
-	  }
+	}
 
 }
