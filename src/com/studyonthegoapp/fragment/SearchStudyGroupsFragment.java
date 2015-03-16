@@ -1,17 +1,21 @@
 package com.studyonthegoapp.fragment;
 
+import com.studyonthegoapp.activity.StudyGroupDetailsActivity;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.restfulapi.GetStudyGroups;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -51,6 +55,24 @@ public class SearchStudyGroupsFragment extends Fragment {
 		// Add to list view
 	    final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(getActivity(), this.studyGroups);
 	    listView.setAdapter(adapter);
+	    
+	    // Set OnItemClickListener
+	    final Context context = getActivity();	    
+	    listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position,
+					long arg3) {
+				// TODO Auto-generated method stub
+				StudyGroup group = (StudyGroup) adapter.getItemAtPosition(position);
+				
+				Log.d("noice: ", group.toString());
+				
+				Intent intent = new Intent(context, StudyGroupDetailsActivity.class);
+				startActivity(intent);
+			}
+	    	
+	    });
 	}
 	
 	private class MySimpleArrayAdapter extends ArrayAdapter<StudyGroup> {
@@ -110,6 +132,12 @@ public class SearchStudyGroupsFragment extends Fragment {
 		
 		  return rowView;
 	    }
+	    
+//	    @Override
+//	    public StudyGroup getItem(int position)
+//	    {
+//	    	return values[position];
+//	    }
 	}
 
 }

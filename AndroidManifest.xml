@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="22" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -26,7 +26,18 @@
         </activity>
         <activity
             android:name="com.studyonthegoapp.activity.AppCoreActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_app_core" >
+        </activity>
+        <activity
+            android:name="com.studyonthegoapp.activity.StudyGroupDetailsActivity"
+            android:label="@string/title_activity_study_group_details" 
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName="com.studyonthegoapp.activity.AppCoreActivity" >
+	        <!-- The meta-data element is needed for versions lower than 4.1 -->
+	        <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="com.studyonthegoapp.activity.AppCoreActivity" /> 
         </activity>
     </application>
 
