@@ -27,6 +27,12 @@
 	<string name="end_time_label"><b>End Time:</b></string>
 	<string name="members_count_label"><b>Members Count:</b></string>
 	<string name="members_limit_label"><b>Members Limit:</b></string>
+	<string name="send_request_button_label">Send Request</string>
+	
+	<!-- fragment_search_study_groups.xml -->
+	<string name="course_hint"><i>Course</i></string>
+	<string name="building_hint"><i>Building</i></string>
+	<string name="search_button_label">Search</string>
 	
     <!-- row_study_group.xml -->
     <string name="group_name"><b><u>Group Name</u></b></string>

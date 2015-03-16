@@ -3,6 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/courseEditText"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/course_hint" />
+
+        <EditText
+            android:id="@+id/buildingEditText"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/building_hint" />
+
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/search_button_label" />
+    
+    </TableRow>
     
     <TableRow
         android:id="@+id/tableRow2"

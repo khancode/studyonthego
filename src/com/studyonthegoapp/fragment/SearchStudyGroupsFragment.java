@@ -1,5 +1,6 @@
 package com.studyonthegoapp.fragment;
 
+import com.studyonthegoapp.activity.AppCoreActivity;
 import com.studyonthegoapp.activity.StudyGroupDetailsActivity;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
@@ -13,31 +14,65 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SearchStudyGroupsFragment extends Fragment {
+public class SearchStudyGroupsFragment extends Fragment implements OnClickListener {
+	
+	private EditText courseET;
+	private EditText buildingET;
+	private Button searchButton;
 	
 	private ListView listView;
-	
+	private MySimpleArrayAdapter adapter;
 	private StudyGroup[] studyGroups;
+	
+	private String username;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState)
 	{
 		View view = inflater.inflate(R.layout.fragment_search_study_groups, container, false);
 		
+		courseET = (EditText) view.findViewById(id.courseEditText);
+		buildingET = (EditText) view.findViewById(id.buildingEditText);
+		searchButton = (Button) view.findViewById(id.searchButton);
+		searchButton.setOnClickListener(this);
+		
 		listView = (ListView) view.findViewById(id.studyGroupsListView);
+		adapter = null;	
 		studyGroups = null;
 		
+		username = ((AppCoreActivity) view.getContext()).getUsername();
+		
 		GetStudyGroups asyncTask = new GetStudyGroups(this);
-		asyncTask.execute();
+		asyncTask.execute(null, null);
 		
 		return view;
+	}
+	
+	@Override
+	public void onClick(View arg0) {
+		String course = courseET.getText().toString();
+		String building = buildingET.getText().toString();
+		
+		if (course.length() == 0)
+			course = null;
+		
+		if (building.length() == 0)
+			building = null;
+		
+		Log.d("onClick", "course: " + course + "\nbuilding: " + building);
+		
+		GetStudyGroups asyncTask = new GetStudyGroups(this);
+		asyncTask.execute(course, building);
 	}
 	
 	public void receiveGetStudyGroupsResultFromMySQL(StudyGroup[] studyGroups)
@@ -53,7 +88,7 @@ public class SearchStudyGroupsFragment extends Fragment {
 		}
 
 		// Add to list view
-	    final MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(getActivity(), this.studyGroups);
+	    adapter = new MySimpleArrayAdapter(getActivity(), this.studyGroups);
 	    listView.setAdapter(adapter);
 	    
 	    // Set OnItemClickListener
@@ -61,14 +96,12 @@ public class SearchStudyGroupsFragment extends Fragment {
 	    listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> adapter, View view, int position,
-					long arg3) {
-				// TODO Auto-generated method stub
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg3) {
 				StudyGroup group = (StudyGroup) adapter.getItemAtPosition(position);
 				
-				Log.d("noice: ", group.toString());
-				
 				Intent intent = new Intent(context, StudyGroupDetailsActivity.class);
+				intent.putExtra("username", username);
+				intent.putExtra("studyGroup", group);
 				startActivity(intent);
 			}
 	    	
@@ -133,11 +166,7 @@ public class SearchStudyGroupsFragment extends Fragment {
 		  return rowView;
 	    }
 	    
-//	    @Override
-//	    public StudyGroup getItem(int position)
-//	    {
-//	    	return values[position];
-//	    }
 	}
+
 
 }

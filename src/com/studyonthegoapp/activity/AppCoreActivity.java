@@ -1,9 +1,6 @@
 package com.studyonthegoapp.activity;
 
 import com.studyonthegoapp.codebase.R;
-import com.studyonthegoapp.codebase.R.id;
-import com.studyonthegoapp.codebase.R.layout;
-import com.studyonthegoapp.codebase.R.menu;
 import com.studyonthegoapp.fragment.ActiveGroupFragment;
 import com.studyonthegoapp.fragment.SearchStudyGroupsFragment;
 
@@ -24,10 +21,11 @@ import android.view.MenuItem;
 public class AppCoreActivity extends ActionBarActivity {
 
 	private String username;
-	private String password;
 	
 	private static ViewPager viewPager;
 	private ActionBar actionBar;
+	
+	public String getUsername() { return this.username; }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,6 @@ public class AppCoreActivity extends ActionBarActivity {
 		// Get username that was passed into intent from LoginFragment
 		Intent intent = getIntent();
 		username = intent.getStringExtra("username");
-		password = intent.getStringExtra("password");
 
 	    // setup action bar for tabs
 	    actionBar = getSupportActionBar();

@@ -3,7 +3,10 @@ package com.studyonthegoapp.oop;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class StudyGroup {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class StudyGroup implements Parcelable{
 
 	private int groupId;
 	private String groupName;
@@ -47,12 +50,38 @@ public class StudyGroup {
 		
 	}
 	
+	public StudyGroup(Parcel parcel)
+	{
+		this.groupId = parcel.readInt();
+		this.groupName = parcel.readString();
+		this.admin = parcel.readString();
+		this.courseId = parcel.readInt();
+		this.description = parcel.readString();
+		this.building = parcel.readString();
+		this.location = parcel.readString();
+		
+		this.startDate = parcel.readString();
+		this.endDate = parcel.readString();
+		this.startTime = parcel.readString();
+		this.endTime = parcel.readString();
+		
+		this.membersCount = parcel.readInt();
+		this.membersLimit = parcel.readInt();
+	}
+	
 	public int getGroupId() { return this.groupId; }
 	public String getGroupName() { return this.groupName; }
 	public String getAdmin() { return this.admin; }
 	public int getCourseId() { return this.courseId; }
 	public String getDescription() { return this.description; }
 	public String getBuilding() { return this.building; }
+	public String getLocation() { return this.location; }
+	public String getStartDate() { return this.startDate; }
+	public String getEndDate() { return this.endDate; }
+	public String getStartTime() { return this.startTime; }
+	public String getEndTime() { return this.endTime; }
+	public int getMembersCount() { return this.membersCount; }
+	public int getMembersLimit() { return this.membersLimit; }
 	
 	@Override
 	public String toString()
@@ -70,5 +99,43 @@ public class StudyGroup {
 			   "EndTime: " + this.endTime + "\n" +
 			   "MembersCount: " + this.membersCount + "\n" +
 			   "MembersLimit: " + this.membersLimit;
+	}
+	
+	public static final Parcelable.Creator<StudyGroup> CREATOR = new Creator<StudyGroup>() {  
+		public StudyGroup createFromParcel(Parcel source) {  
+		    return new StudyGroup(source);
+		}
+
+		@Override
+		public StudyGroup[] newArray(int size) {
+			// TODO Auto-generated method stub
+			return new StudyGroup[size];
+		}
+	};
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int i) {
+		// TODO Auto-generated method stub
+		parcel.writeInt(groupId);
+		parcel.writeString(groupName);
+		parcel.writeString(admin);
+		parcel.writeInt(courseId);
+		parcel.writeString(description);
+		parcel.writeString(building);
+		parcel.writeString(location);
+		parcel.writeString(startDate);
+		parcel.writeString(endDate);
+		parcel.writeString(startTime);
+		parcel.writeString(endTime);
+		parcel.writeInt(membersCount);
+		parcel.writeInt(membersLimit);
+		
+		
 	}
 }

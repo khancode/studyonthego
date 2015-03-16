@@ -30,10 +30,20 @@ public class GetStudyGroups extends AsyncTask<String, Void, Void>
 	@Override
 	protected Void doInBackground(String... params) {
 		
-//		String course = params[0];
-//		String building = params[1];
+		String course = params[0];
+		String building = params[1];
 		
-		String url = "http://www.studyonthegoapp.com/rest/studygroups/show";
+		String url;		
+		if (course == null && building == null)
+			url = "http://www.studyonthegoapp.com/rest/studygroups/show";
+		else if (course != null && building == null)
+			url = "http://www.studyonthegoapp.com/rest/studygroups/show?course="+course;
+		else if (course == null && building != null)
+			url = "http://www.studyonthegoapp.com/rest/studygroups/show?building="+building;
+		else
+			url = "http://www.studyonthegoapp.com/rest/studygroups/show?course="+course+"&building="+building;
+		
+//		String url = "http://www.studyonthegoapp.com/rest/studygroups/show";
 		
 		StringBuffer response = new StringBuffer();
 		

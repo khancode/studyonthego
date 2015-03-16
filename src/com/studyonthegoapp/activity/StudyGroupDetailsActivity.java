@@ -2,17 +2,20 @@ package com.studyonthegoapp.activity;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
-import com.studyonthegoapp.codebase.R.layout;
-import com.studyonthegoapp.codebase.R.menu;
+import com.studyonthegoapp.oop.StudyGroup;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
-public class StudyGroupDetailsActivity extends ActionBarActivity {
+public class StudyGroupDetailsActivity extends ActionBarActivity implements OnClickListener {
 
 	private TextView groupNameTV;
 	private TextView courseTV;
@@ -26,6 +29,10 @@ public class StudyGroupDetailsActivity extends ActionBarActivity {
 	private TextView endTimeTV;
 	private TextView membersCountTV;
 	private TextView membersLimitTV;
+	private Button sendRequestButton;
+	
+	private String username;
+	private StudyGroup group;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +51,27 @@ public class StudyGroupDetailsActivity extends ActionBarActivity {
 		endTimeTV = (TextView) findViewById(id.endTimeTextView);
 		membersCountTV = (TextView) findViewById(id.membersCountTextView);
 		membersLimitTV = (TextView) findViewById(id.membersLimitTextView);
+		sendRequestButton = (Button) findViewById(id.sendRequestButton);
+		sendRequestButton.setOnClickListener(this);
 		
 		Intent intent = getIntent();
+		username = intent.getStringExtra("username");
+		group = (StudyGroup) intent.getExtras().getParcelable("studyGroup");
+		
+		Log.d("OnCreate()", "username: " + username + "\n\tgroup: " + group.toString());
+		
+		groupNameTV.setText(group.getGroupName());
+		courseTV.setText(Integer.toString(group.getCourseId()));
+		adminTV.setText(group.getAdmin());
+		descriptionTV.setText(group.getDescription());
+		buildingTV.setText(group.getBuilding());
+		locationTV.setText(group.getLocation());
+		startDateTV.setText(group.getStartDate());
+		endDateTV.setText(group.getEndDate());
+		startTimeTV.setText(group.getStartTime());
+		endTimeTV.setText(group.getEndTime());
+		membersCountTV.setText(Integer.toString(group.getMembersCount()));
+		membersLimitTV.setText(Integer.toString(group.getMembersLimit()));
 	}
 
 	@Override
@@ -65,5 +91,12 @@ public class StudyGroupDetailsActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View view) {
+		// TODO Auto-generated method stub
+		
+		Log.d("onClick()", "NEED TO IMPLEMENT");
 	}
 }

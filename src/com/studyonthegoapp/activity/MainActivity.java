@@ -58,7 +58,6 @@ public class MainActivity extends ActionBarActivity {
 		
 		Intent intent = new Intent(this, AppCoreActivity.class);
 		intent.putExtra("username", username);
-		intent.putExtra("password", password);
 		startActivity(intent);		
 	}
 }
