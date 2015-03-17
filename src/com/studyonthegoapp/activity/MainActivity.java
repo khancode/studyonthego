@@ -51,8 +51,6 @@ public class MainActivity extends ActionBarActivity {
 	
 	public void verifyLogin(View view)
 	{
-		Log.d("verifyLogin()", "It works! :D");
-		
 		String username = usernameET.getText().toString();
 		String password = passwordET.getText().toString();
 		

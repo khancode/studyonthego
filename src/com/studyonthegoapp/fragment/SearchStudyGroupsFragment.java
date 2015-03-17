@@ -69,8 +69,6 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 		if (building.length() == 0)
 			building = null;
 		
-		Log.d("onClick", "course: " + course + "\nbuilding: " + building);
-		
 		GetStudyGroups asyncTask = new GetStudyGroups(this);
 		asyncTask.execute(course, building);
 	}

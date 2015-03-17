@@ -5,14 +5,15 @@
 
     <TableRow
         android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
 
-        <TextView
-            android:id="@+id/textView1"
+        <Button
+            android:id="@+id/actionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Active Group fragments" />
+            android:text="@string/create_group_button_label" />
         
     </TableRow>
 

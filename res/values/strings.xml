@@ -29,6 +29,9 @@
 	<string name="members_limit_label"><b>Members Limit:</b></string>
 	<string name="send_request_button_label">Send Request</string>
 	
+	<!-- fragment_active_group.xml -->
+	<string name="create_group_button_label">Create New Study Group</string>
+	
 	<!-- fragment_search_study_groups.xml -->
 	<string name="course_hint"><i>Course</i></string>
 	<string name="building_hint"><i>Building</i></string>
