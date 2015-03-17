@@ -12,6 +12,9 @@ public class StudyGroup implements Parcelable{
 	private String groupName;
 	private String admin;
 	private int courseId;
+	private String subject;
+	private int courseNumber;
+	private String section;
 	private String description;
 	private String building;
 	private String location;
@@ -30,6 +33,9 @@ public class StudyGroup implements Parcelable{
 			this.groupName = jsonObj.getString("GroupName");
 			this.admin = jsonObj.getString("Admin");
 			this.courseId = jsonObj.getInt("CourseID");
+			this.subject = jsonObj.getString("Subject");
+			this.courseNumber = jsonObj.getInt("CourseNumber");
+			this.section = jsonObj.getString("Section");
 			this.description = jsonObj.getString("Description");
 			this.building = jsonObj.getString("Building");
 			this.location = jsonObj.getString("Location");
@@ -56,6 +62,9 @@ public class StudyGroup implements Parcelable{
 		this.groupName = parcel.readString();
 		this.admin = parcel.readString();
 		this.courseId = parcel.readInt();
+		this.subject = parcel.readString();
+		this.courseNumber = parcel.readInt();
+		this.section = parcel.readString();
 		this.description = parcel.readString();
 		this.building = parcel.readString();
 		this.location = parcel.readString();
@@ -73,6 +82,9 @@ public class StudyGroup implements Parcelable{
 	public String getGroupName() { return this.groupName; }
 	public String getAdmin() { return this.admin; }
 	public int getCourseId() { return this.courseId; }
+	public String getSubject() { return this.subject; }
+	public int getCourseNumber() { return this.courseNumber; }
+	public String getSection() { return this.section; }
 	public String getDescription() { return this.description; }
 	public String getBuilding() { return this.building; }
 	public String getLocation() { return this.location; }
@@ -90,6 +102,9 @@ public class StudyGroup implements Parcelable{
 			   "GroupName: " + this.groupName + "\n" +
 			   "Admin: " + this.admin + "\n" +
 			   "CourseID: " + this.courseId + "\n" +
+			   "Subject: " + this.subject + "\n" +
+			   "CourseNumber: " + this.courseNumber + "\n" +
+			   "Section: " + this.section + "\n" + 
 			   "Description: " + this.description + "\n" +
 			   "Building: " + this.building + "\n" +
 			   "Location: " + this.location + "\n" +
@@ -126,6 +141,9 @@ public class StudyGroup implements Parcelable{
 		parcel.writeString(groupName);
 		parcel.writeString(admin);
 		parcel.writeInt(courseId);
+		parcel.writeString(subject);
+		parcel.writeInt(courseNumber);
+		parcel.writeString(section);
 		parcel.writeString(description);
 		parcel.writeString(building);
 		parcel.writeString(location);

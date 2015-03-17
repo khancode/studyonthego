@@ -2,6 +2,8 @@ package com.studyonthegoapp.active;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
+import com.studyonthegoapp.oop.StudyGroup;
+import com.studyonthegoapp.restfulapi.CreateStudyGroup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,7 +66,8 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		String endTime = endTimeET.getText().toString();
 		String membersLimit = membersLimitET.getText().toString();
 		
-		Log.d("OnClick", "groupName: " + groupName +
+		Log.d("OnClick", "username: " + username +
+						 "\ngroupName: " + groupName +
 						 "\ncourse: " + course +
 						 "\ndescription: " + description +
 						 "\nbuilding: " + building +
@@ -74,5 +77,17 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 						 "\nstartTime: " + startTime +
 						 "\nendTime: " + endTime +
 						 "\nmembersLimit: " + membersLimit);
+		
+		CreateStudyGroup asyncTask = new CreateStudyGroup(this);
+		asyncTask.execute(username, groupName, course, description, building,
+						  location, startDate, endDate, startTime, endTime, membersLimit);
+		
+	}
+	
+	public void receiveCreateStudyGroupResultFromMySQL(boolean groupNameExists, boolean insertError)
+	{
+		// TODO NEED TO IMPLEMENT
+		Log.d("receiveCreateStudyGroupResultFromMySQL", "groupNameExists: " + groupNameExists +
+														"\ninsertError: " + insertError);
 	}
 }

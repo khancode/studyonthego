@@ -3,9 +3,11 @@ package com.studyonthegoapp.restfulapi;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,12 +38,35 @@ public class GetStudyGroups extends AsyncTask<String, Void, Void>
 		String url;		
 		if (course == null && building == null)
 			url = "http://www.studyonthegoapp.com/rest/studygroups/show";
-		else if (course != null && building == null)
-			url = "http://www.studyonthegoapp.com/rest/studygroups/show?course="+course;
-		else if (course == null && building != null)
-			url = "http://www.studyonthegoapp.com/rest/studygroups/show?building="+building;
 		else
-			url = "http://www.studyonthegoapp.com/rest/studygroups/show?course="+course+"&building="+building;
+		{
+			if (course != null) {
+				try {
+					course = URLEncoder.encode(params[0], "UTF-8");
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			if (building != null) {
+				try {
+					building = URLEncoder.encode(params[1], "UTF-8");
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			if (course != null && building == null)
+			{
+				url = "http://www.studyonthegoapp.com/rest/studygroups/show?course="+course;
+			}
+			else if (course == null && building != null)
+				url = "http://www.studyonthegoapp.com/rest/studygroups/show?building="+building;
+			else
+				url = "http://www.studyonthegoapp.com/rest/studygroups/show?course="+course+"&building="+building;
+		}
 		
 //		String url = "http://www.studyonthegoapp.com/rest/studygroups/show";
 		

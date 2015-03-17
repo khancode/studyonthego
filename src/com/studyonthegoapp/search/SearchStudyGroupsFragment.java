@@ -76,6 +76,12 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	{	
 		this.studyGroups = studyGroups;
 		
+		if (studyGroups == null)
+		{
+			Log.e("receiveGetStudyGroupsResultFromMySQL", "studyGroups is null");
+			return;
+		}
+		
 		// DEBUG PURPOSES: printing result
 		for (int i = 0; i < this.studyGroups.length; i++)
 		{
@@ -142,7 +148,7 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	    	ViewHolder holder = (ViewHolder) rowView.getTag();
 	    	StudyGroup group = values[position];
 	    	holder.groupNameTV.setText(group.getGroupName());
-	    	holder.courseTV.setText(Integer.toString(group.getCourseId()));
+	    	holder.courseTV.setText(group.getSubject() + " " + group.getCourseNumber());
 	    	holder.buildingTV.setText(group.getBuilding());
 	    	
 //		  TextView groupNameTV = (TextView) rowView.findViewById(R.id.groupNameTextView);

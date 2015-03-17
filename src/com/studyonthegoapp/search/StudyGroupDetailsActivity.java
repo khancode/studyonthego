@@ -61,7 +61,7 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 //		Log.d("OnCreate()", "username: " + username + "\n\tgroup: " + group.toString());
 		
 		groupNameTV.setText(group.getGroupName());
-		courseTV.setText(Integer.toString(group.getCourseId()));
+		courseTV.setText(group.getSubject() + " " + group.getCourseNumber() + " " + group.getSection());
 		adminTV.setText(group.getAdmin());
 		descriptionTV.setText(group.getDescription());
 		buildingTV.setText(group.getBuilding());
