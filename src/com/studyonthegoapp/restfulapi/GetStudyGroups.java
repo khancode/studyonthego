@@ -11,8 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.studyonthegoapp.fragment.SearchStudyGroupsFragment;
 import com.studyonthegoapp.oop.StudyGroup;
+import com.studyonthegoapp.search.SearchStudyGroupsFragment;
 
 import android.os.AsyncTask;
 

@@ -1,8 +1,8 @@
 package com.studyonthegoapp.activity;
 
+import com.studyonthegoapp.active.ActiveGroupFragment;
 import com.studyonthegoapp.codebase.R;
-import com.studyonthegoapp.fragment.ActiveGroupFragment;
-import com.studyonthegoapp.fragment.SearchStudyGroupsFragment;
+import com.studyonthegoapp.search.SearchStudyGroupsFragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
