@@ -2,27 +2,35 @@ package com.studyonthegoapp.active;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
+import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.restfulapi.CreateStudyGroup;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class CreateGroupActivity extends ActionBarActivity implements OnClickListener{
+public class CreateGroupActivity extends ActionBarActivity implements OnClickListener {
 
 	private EditText groupNameET;
-	private EditText courseET;
+	private Spinner courseSpinner;
 	private EditText descriptionET;
 	private EditText buildingET;
 	private EditText locationET;
@@ -34,7 +42,8 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	private Button createGroupButton;
 	
 	private String groupName;
-	private String course;
+	private String admin;
+	private Course course;
 	private String description;
 	private String building;
 	private String location;
@@ -52,7 +61,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		setContentView(R.layout.activity_create_group);
 		
 		groupNameET = (EditText) findViewById(id.groupNameEditText);
-		courseET = (EditText) findViewById(id.courseEditText);
+		courseSpinner = (Spinner) findViewById(id.courseSpinner);
 		descriptionET = (EditText) findViewById(id.descriptionEditText);
 		buildingET = (EditText) findViewById(id.buildingEditText);
 		locationET = (EditText) findViewById(id.locationEditText);
@@ -66,12 +75,31 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		
 		Intent intent = getIntent();
 		profile = (Profile) intent.getExtras().getParcelable("profile");
+		admin = profile.getUsername();
+		
+	    MySimpleArrayAdapter dAdapter = new MySimpleArrayAdapter(this, profile.getCourses());
+	    courseSpinner.setAdapter(dAdapter);
+	    courseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				course = profile.getCourses()[position];
+				
+				Log.d("onItemSelected", "course: " + course);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+	    	
+	    });
 	}
 	
 	@Override
 	public void onClick(View arg0) {
 		groupName = groupNameET.getText().toString();
-		course = courseET.getText().toString();
+		int courseId = course.getId(); 
 		description = descriptionET.getText().toString();
 		building = buildingET.getText().toString();
 		location = locationET.getText().toString();
@@ -81,9 +109,9 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		endTime = endTimeET.getText().toString();
 		membersLimit = Integer.parseInt(membersLimitET.getText().toString());
 		
-		Log.d("OnClick", "username: " + profile.getUsername() +
-						 "\ngroupName: " + groupName +
-						 "\ncourse: " + course +
+		Log.d("OnClick", "groupName: " + groupName +
+						 "\nadmin: " + admin +
+						 "\ncourse: " + courseId +
 						 "\ndescription: " + description +
 						 "\nbuilding: " + building +
 						 "\nlocation: " + location +
@@ -94,14 +122,13 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 						 "\nmembersLimit: " + membersLimit);
 		
 		CreateStudyGroup asyncTask = new CreateStudyGroup(this);
-		asyncTask.execute(profile.getUsername(), groupName, course, description, building,
+		asyncTask.execute(admin, groupName, Integer.toString(courseId), description, building,
 						  location, startDate, endDate, startTime, endTime, Integer.toString(membersLimit));
 		
 	}
 	
 	public void receiveCreateStudyGroupResultFromMySQL(boolean groupNameExists, boolean insertError, int groupId)
 	{
-		// TODO NEED TO IMPLEMENT
 		Log.d("receiveCreateStudyGroupResultFromMySQL", "groupNameExists: " + groupNameExists +
 														"\ninsertError: " + insertError +
 														"\ngroupId: " + groupId);
@@ -117,8 +144,8 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		}
 		else if (groupNameExists == false && insertError == false)
 		{
-			// TODO create Profile class such that it contains: courseId, subject, courseNumber, and section
-			StudyGroup group = new StudyGroup(groupId, groupName, profile.getUsername(), 1, "subject", 4261, "section",
+			StudyGroup group = new StudyGroup(groupId, groupName, admin, course.getId(), 
+											  course.getSubject(), course.getNumber(), course.getSection(),
 											  description, building, location, startDate, endDate,
 											  startTime, endTime, membersLimit);
 			showAlertDialog(group);
@@ -150,5 +177,53 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
     	// Activity finished ok, return the data
     	setResult(RESULT_OK, data);
     	finish();
+	}
+	
+	/**
+	 * Used for creating courseSpinner view
+	 * @author khancode
+	 */
+	
+	private class MySimpleArrayAdapter extends ArrayAdapter<Course>
+	{
+		Context context;
+	    Course[] values;
+
+	    public MySimpleArrayAdapter(Context context, Course[] values) {
+	        super(context, android.R.layout.simple_spinner_item, values);
+	        this.context = context;
+	        this.values = values;
+	    }
+	    
+	    @Override
+        public View getView(int position, View convertView, ViewGroup parent) 
+        {   
+	    	return initView(position, convertView, parent);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        {   
+        	// This view starts when we click the spinner.
+        	return initView(position, convertView, parent);
+        }
+        
+        private View initView(int position, View convertView, ViewGroup parent)
+        {
+        	View row = convertView;
+            if(row == null)
+            {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = inflater.inflate(R.layout.spinner_course_item, parent, false);
+            }
+
+            Course course = values[position];
+            String format = course.getSubject() + " " + course.getNumber();
+            
+            TextView courseTV = (TextView) row.findViewById(id.courseTextView);
+            courseTV.setText(format);
+
+            return row;
+        }
 	}
 }

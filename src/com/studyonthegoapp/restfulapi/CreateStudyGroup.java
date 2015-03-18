@@ -48,7 +48,7 @@ public class CreateStudyGroup extends AsyncTask<String, Void, Void>
 			e1.printStackTrace();
 		}
 		
-		String course = "1"; //params[2];
+		String course = params[2];
 		String startDate = params[6];
 		String endDate = params[7];
 		String startTime = params[8];

@@ -38,13 +38,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/course_label" />
 
-        <EditText
-            android:id="@+id/courseEditText"
+        <Spinner
+            android:id="@+id/courseSpinner"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text" />
+            android:layout_weight="1" />
 
     </TableRow>
     

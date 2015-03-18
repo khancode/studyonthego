@@ -30,6 +30,15 @@ public class Course implements Parcelable {
 	public String getSubject() { return this.subject; }
 	public int getNumber() { return this.number; }
 	public String getSection() { return this.section; }
+	
+	@Override
+	public String toString()
+	{
+		return "id: " + id +
+			   "\nsubject: " + subject +
+			   "\nnumber: " + number +
+			   "\nsection: " + section;
+	}
 
 	public static final Parcelable.Creator<Course> CREATOR = new Creator<Course>() {  
 		public Course createFromParcel(Parcel source) {  
