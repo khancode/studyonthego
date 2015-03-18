@@ -5,14 +5,18 @@ import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.restfulapi.CreateStudyGroup;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class CreateGroupActivity extends ActionBarActivity implements OnClickListener{
 
@@ -27,6 +31,17 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	private EditText endTimeET;
 	private EditText membersLimitET;
 	private Button createGroupButton;
+	
+	private String groupName;
+	private String course;
+	private String description;
+	private String building;
+	private String location;
+	private String startDate;
+	private String endDate;
+	private String startTime;
+	private String endTime;
+	private int membersLimit;
 	
 	private String username;
 	
@@ -54,17 +69,16 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	
 	@Override
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		String groupName = groupNameET.getText().toString();
-		String course = courseET.getText().toString();
-		String description = descriptionET.getText().toString();
-		String building = buildingET.getText().toString();
-		String location = locationET.getText().toString();
-		String startDate = startDateET.getText().toString();
-		String endDate = endDateET.getText().toString();
-		String startTime = startTimeET.getText().toString();
-		String endTime = endTimeET.getText().toString();
-		String membersLimit = membersLimitET.getText().toString();
+		groupName = groupNameET.getText().toString();
+		course = courseET.getText().toString();
+		description = descriptionET.getText().toString();
+		building = buildingET.getText().toString();
+		location = locationET.getText().toString();
+		startDate = startDateET.getText().toString();
+		endDate = endDateET.getText().toString();
+		startTime = startTimeET.getText().toString();
+		endTime = endTimeET.getText().toString();
+		membersLimit = Integer.parseInt(membersLimitET.getText().toString());
 		
 		Log.d("OnClick", "username: " + username +
 						 "\ngroupName: " + groupName +
@@ -80,14 +94,62 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		
 		CreateStudyGroup asyncTask = new CreateStudyGroup(this);
 		asyncTask.execute(username, groupName, course, description, building,
-						  location, startDate, endDate, startTime, endTime, membersLimit);
+						  location, startDate, endDate, startTime, endTime, Integer.toString(membersLimit));
 		
 	}
 	
-	public void receiveCreateStudyGroupResultFromMySQL(boolean groupNameExists, boolean insertError)
+	public void receiveCreateStudyGroupResultFromMySQL(boolean groupNameExists, boolean insertError, int groupId)
 	{
 		// TODO NEED TO IMPLEMENT
 		Log.d("receiveCreateStudyGroupResultFromMySQL", "groupNameExists: " + groupNameExists +
-														"\ninsertError: " + insertError);
+														"\ninsertError: " + insertError +
+														"\ngroupId: " + groupId);
+		
+		if (groupNameExists)
+			groupNameET.setError("Group name already exists! :o");
+		else if (groupNameExists == false && insertError)
+		{
+			Toast toast = Toast.makeText(this, 
+					"Error: Please try creating group again.", Toast.LENGTH_SHORT);  
+			toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+			toast.show();
+		}
+		else if (groupNameExists == false && insertError == false)
+		{
+			// TODO create Profile class such that it contains: courseId, subject, courseNumber, and section
+			StudyGroup group = new StudyGroup(groupId, groupName, username, 1, "subject", 4261, "section",
+											  description, building, location, startDate, endDate,
+											  startTime, endTime, membersLimit);
+			showAlertDialog(group);
+		}
+	}
+	
+	private void showAlertDialog(final StudyGroup group)
+	{
+		
+		// TODO Auto-generated method stub
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+		builder1.setTitle("Success!");
+        builder1.setMessage("Successfully created group! :D");
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	
+            	sendBackToParentFragment(group);
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+	}
+	
+	public void sendBackToParentFragment(StudyGroup group) {
+		Intent data = new Intent();
+    	data.putExtra("studyGroup", group);
+    	// Activity finished ok, return the data
+    	setResult(RESULT_OK, data);
+    	finish();
 	}
 }

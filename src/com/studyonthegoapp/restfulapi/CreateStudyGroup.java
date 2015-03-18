@@ -21,6 +21,7 @@ public class CreateStudyGroup extends AsyncTask<String, Void, Void>
 {	
 	private boolean groupNameExists;
 	private boolean insertError;
+	private int groupId;
 	private CreateGroupActivity createGroupActivity;
 	
 	public CreateStudyGroup(CreateGroupActivity instance)
@@ -110,6 +111,7 @@ public class CreateStudyGroup extends AsyncTask<String, Void, Void>
 		
 			groupNameExists = jsonObj.getBoolean("groupNameExists");
 			insertError = jsonObj.getBoolean("insertError");
+			groupId = jsonObj.getInt("groupId");
 		}
 		catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -123,7 +125,7 @@ public class CreateStudyGroup extends AsyncTask<String, Void, Void>
 	protected void onPostExecute(Void v)
 	{
 		// Return the results to Messaging activity
-		createGroupActivity.receiveCreateStudyGroupResultFromMySQL(groupNameExists, insertError);
+		createGroupActivity.receiveCreateStudyGroupResultFromMySQL(groupNameExists, insertError, groupId);
 	}
 
 }

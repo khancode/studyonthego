@@ -1,35 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1" >
-    </TableRow>
+	<TableLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	
+	    <TableRow
+	        android:id="@+id/tableRow1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/group_name_label" />
+	
+	        <TextView
+	            android:id="@+id/groupNameTextView"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/group_name_label" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow2"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/course_label" />
+	
+	        <EditText
+	            android:id="@+id/courseEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="text" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow3"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/description_label" />
+	
+	        <EditText
+	            android:id="@+id/descriptionEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="text" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow4"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/building_label" />
+	
+	        <EditText
+	            android:id="@+id/buildingEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="text" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow5"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/location_label" />
+	
+	        <EditText
+	            android:id="@+id/locationEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="text" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow6"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/start_date_label" />
+	
+	        <EditText
+	            android:id="@+id/startDateEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="date" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow7"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/end_date_label" />
+	
+	        <EditText
+	            android:id="@+id/endDateEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="date" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow8"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/start_time_label" />
+	
+	        <EditText
+	            android:id="@+id/startTimeEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="time" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow9"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/end_time_label" />
+	
+	        <EditText
+	            android:id="@+id/endTimeEditText"
+				android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="time" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow10"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TextView
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/members_limit_label" />
+	
+	        <EditText
+	            android:id="@+id/membersLimitEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:inputType="number" />
+	
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow11"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_horizontal" >
+	
+	        <Button
+	            android:id="@+id/createGroupbutton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/create_group_button_label" />
+	                
+	    </TableRow>
+	
+	</TableLayout>
 
-    <TableRow
-        android:id="@+id/tableRow2"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:gravity="center_horizontal" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/admin_of_group" />
-
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow3"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1" >
-    </TableRow>
-
-</TableLayout>
+</ScrollView>

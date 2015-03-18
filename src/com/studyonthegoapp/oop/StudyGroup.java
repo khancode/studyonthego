@@ -56,6 +56,29 @@ public class StudyGroup implements Parcelable{
 		
 	}
 	
+	public StudyGroup(int groupId, String groupName, String admin, int courseId, String subject, 
+					  int courseNumber, String section, String description, String building,
+					  String location, String startDate, String endDate, String startTime,
+					  String endTime, int membersLimit)
+	{
+		this.groupId = groupId;
+		this.groupName = groupName;
+		this.admin = admin;
+		this.courseId = courseId;
+		this.subject = subject;
+		this.courseNumber = courseNumber;
+		this.section = section;
+		this.description = description;
+		this.building = building;
+		this.location = location;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.membersCount = 1; // the group always includes the admin
+		this.membersLimit = membersLimit;
+	}
+	
 	public StudyGroup(Parcel parcel)
 	{
 		this.groupId = parcel.readInt();
