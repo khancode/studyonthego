@@ -159,7 +159,7 @@ public class StudyGroup implements Parcelable{
 
 	@Override
 	public void writeToParcel(Parcel parcel, int i) {
-		// TODO Auto-generated method stub
+
 		parcel.writeInt(groupId);
 		parcel.writeString(groupName);
 		parcel.writeString(admin);
@@ -176,7 +176,6 @@ public class StudyGroup implements Parcelable{
 		parcel.writeString(endTime);
 		parcel.writeInt(membersCount);
 		parcel.writeInt(membersLimit);
-		
 		
 	}
 }

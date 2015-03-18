@@ -1,22 +1,21 @@
 package com.studyonthegoapp.active;
 
-import com.studyonthegoapp.activity.AppCoreActivity;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
+import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	
@@ -26,7 +25,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	
 	private FragmentManager manager;
 	
-	private String username;
+	private Profile profile;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState)
@@ -39,17 +38,20 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		manager = getFragmentManager();
 		addNoGroupInnerFragment();
 		
-		username = ((AppCoreActivity) view.getContext()).getUsername();
-		
 		return view;
+	}
+	
+	/** Immediately called after being instantiated */
+	public void setProfileFromAppCoreActivity(Profile profile)
+	{ 
+		this.profile = profile; 
 	}
 	
 	@Override
 	public void onClick(View arg0) {
 				
-		// TODO Auto-generated method stub
 		Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
-		intent.putExtra("username", username);
+		intent.putExtra("profile", profile);
 		startActivityForResult(intent, REQUEST_CODE);
 			
 	}
@@ -64,7 +66,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		
 		if (requestCode == REQUEST_CODE)
 		{			
-		    if (resultCode == getActivity().RESULT_OK) {
+		    if (resultCode == Activity.RESULT_OK) {
 //		        if (data.hasExtra("myData1")) {
 //		            Toast.makeText(getActivity(), data.getExtras().getString("myData1"),
 //		                Toast.LENGTH_SHORT).show();

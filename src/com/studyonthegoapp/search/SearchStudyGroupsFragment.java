@@ -1,8 +1,8 @@
 package com.studyonthegoapp.search;
 
-import com.studyonthegoapp.activity.AppCoreActivity;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
+import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.restfulapi.GetStudyGroups;
 
@@ -33,7 +33,7 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	private MySimpleArrayAdapter adapter;
 	private StudyGroup[] studyGroups;
 	
-	private String username;
+	private Profile profile;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState)
@@ -49,12 +49,16 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 		adapter = null;	
 		studyGroups = null;
 		
-		username = ((AppCoreActivity) view.getContext()).getUsername();
+		return view;
+	}
+	
+	/** Immediately called after being instantiated */
+	public void setProfileFromAppCoreActivity(Profile profile)
+	{
+		this.profile = profile;
 		
 		GetStudyGroups asyncTask = new GetStudyGroups(this);
 		asyncTask.execute(null, null);
-		
-		return view;
 	}
 	
 	@Override
@@ -103,7 +107,7 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 				StudyGroup group = (StudyGroup) adapter.getItemAtPosition(position);
 				
 				Intent intent = new Intent(context, StudyGroupDetailsActivity.class);
-				intent.putExtra("username", username);
+				intent.putExtra("profile", profile);
 				intent.putExtra("studyGroup", group);
 				startActivity(intent);
 			}

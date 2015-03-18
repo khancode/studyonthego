@@ -2,6 +2,7 @@ package com.studyonthegoapp.active;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
+import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.restfulapi.CreateStudyGroup;
 
@@ -43,7 +44,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	private String endTime;
 	private int membersLimit;
 	
-	private String username;
+	private Profile profile;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		createGroupButton.setOnClickListener(this);
 		
 		Intent intent = getIntent();
-		username = intent.getStringExtra("username");
+		profile = (Profile) intent.getExtras().getParcelable("profile");
 	}
 	
 	@Override
@@ -80,7 +81,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		endTime = endTimeET.getText().toString();
 		membersLimit = Integer.parseInt(membersLimitET.getText().toString());
 		
-		Log.d("OnClick", "username: " + username +
+		Log.d("OnClick", "username: " + profile.getUsername() +
 						 "\ngroupName: " + groupName +
 						 "\ncourse: " + course +
 						 "\ndescription: " + description +
@@ -93,7 +94,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 						 "\nmembersLimit: " + membersLimit);
 		
 		CreateStudyGroup asyncTask = new CreateStudyGroup(this);
-		asyncTask.execute(username, groupName, course, description, building,
+		asyncTask.execute(profile.getUsername(), groupName, course, description, building,
 						  location, startDate, endDate, startTime, endTime, Integer.toString(membersLimit));
 		
 	}
@@ -117,7 +118,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		else if (groupNameExists == false && insertError == false)
 		{
 			// TODO create Profile class such that it contains: courseId, subject, courseNumber, and section
-			StudyGroup group = new StudyGroup(groupId, groupName, username, 1, "subject", 4261, "section",
+			StudyGroup group = new StudyGroup(groupId, groupName, profile.getUsername(), 1, "subject", 4261, "section",
 											  description, building, location, startDate, endDate,
 											  startTime, endTime, membersLimit);
 			showAlertDialog(group);
@@ -126,8 +127,6 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	
 	private void showAlertDialog(final StudyGroup group)
 	{
-		
-		// TODO Auto-generated method stub
 		AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
 		builder1.setTitle("Success!");
         builder1.setMessage("Successfully created group! :D");
@@ -136,7 +135,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
                 new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             	
-            	sendBackToParentFragment(group);
+            	sendDataBackToParentFragment(group);
                 dialog.cancel();
             }
         });
@@ -145,7 +144,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
         alert11.show();
 	}
 	
-	public void sendBackToParentFragment(StudyGroup group) {
+	public void sendDataBackToParentFragment(StudyGroup group) {
 		Intent data = new Intent();
     	data.putExtra("studyGroup", group);
     	// Activity finished ok, return the data

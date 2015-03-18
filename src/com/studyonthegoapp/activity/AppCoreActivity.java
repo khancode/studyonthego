@@ -2,6 +2,8 @@ package com.studyonthegoapp.activity;
 
 import com.studyonthegoapp.active.ActiveGroupFragment;
 import com.studyonthegoapp.codebase.R;
+import com.studyonthegoapp.oop.Course;
+import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.search.SearchStudyGroupsFragment;
 
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 public class AppCoreActivity extends ActionBarActivity {
 
 	private String username;
+	private Profile profile;
 	
 	private static ViewPager viewPager;
 	private ActionBar actionBar;
@@ -31,9 +34,8 @@ public class AppCoreActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_app_core);
-		
-		
-		// Get username that was passed into intent from LoginFragment
+				
+		// Get username that was passed into intent from MainActivity
 		Intent intent = getIntent();
 		username = intent.getStringExtra("username");
 
@@ -75,6 +77,16 @@ public class AppCoreActivity extends ActionBarActivity {
 	    actionBar.addTab(actionBar.newTab().setText("Active").setTabListener(new TabListener<ActiveGroupFragment>(activeGroupFragment)));
 	    actionBar.addTab(actionBar.newTab().setText("Search").setTabListener(new TabListener<SearchStudyGroupsFragment>(searchStudyGroupsFragment)));
 
+	    
+	    // TODO Get courses from either T-Square API or MySQL
+	    // dummy courses data for now
+	    Course[] courses = { new Course(1, "CS", 3451, "A"),
+	    					 new Course(4, "CS", 3600, "A"),
+	    					 new Course(5, "CS", 3251, "B") };
+	    
+	    this.profile = new Profile(username, courses);
+	    activeGroupFragment.setProfileFromAppCoreActivity(profile);
+	    searchStudyGroupsFragment.setProfileFromAppCoreActivity(profile);
 	}
 
 	@Override
