@@ -47,6 +47,12 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		this.profile = profile; 
 	}
 	
+	/** Called from SearchStudyGroupsFragment */
+	public void getUserAdminGroupFromSearchStudyGroupsFragment(StudyGroup group)
+	{
+		replaceInnerFragmentWithAdminGroup(group);
+	}
+	
 	@Override
 	public void onClick(View arg0) {
 				

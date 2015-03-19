@@ -109,6 +109,8 @@ public class AppCoreActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public ActiveGroupFragment getActiveGroupFragment() { return this.activeGroupFragment; }
+	public SearchStudyGroupsFragment getSearchStudyGroupsFragment() { return this.searchStudyGroupsFragment; }
 	
 	public static class TabsPagerAdapter extends FragmentPagerAdapter
 	{

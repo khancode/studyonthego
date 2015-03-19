@@ -1,5 +1,6 @@
 package com.studyonthegoapp.search;
 
+import com.studyonthegoapp.activity.AppCoreActivity;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.Course;
@@ -35,6 +36,8 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	private StudyGroup[] studyGroups;
 	
 	private Profile profile;
+	
+	private AppCoreActivity parentActivity;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState)
@@ -49,6 +52,10 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 		listView = (ListView) view.findViewById(id.studyGroupsListView);
 		adapter = null;	
 		studyGroups = null;
+		
+		profile = null;
+		
+		parentActivity = (AppCoreActivity) getActivity();
 		
 		return view;
 	}
@@ -163,7 +170,7 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	    // myGroup is null if [(user parameter was null) OR (user parameter is not null and no associated group was found)]
 	    if (myGroup != null)
 	    {
-	    	
+	    	parentActivity.getActiveGroupFragment().getUserAdminGroupFromSearchStudyGroupsFragment(myGroup);
 	    }
 	}
 	
