@@ -2,9 +2,10 @@ package com.studyonthegoapp.search;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
+import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
-import com.studyonthegoapp.restfulapi.GetStudyGroups;
+import com.studyonthegoapp.restfulapi.GetCurrentStudyGroups;
 
 import android.content.Context;
 import android.content.Intent;
@@ -57,42 +58,87 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	{
 		this.profile = profile;
 		
-		GetStudyGroups asyncTask = new GetStudyGroups(this);
-		asyncTask.execute(null, null);
+		getCurrentStudyGroupsWithUsersCourses();
+	}
+	
+	private void getCurrentStudyGroupsWithUsersCourses()
+	{
+		Course[] courses = profile.getCourses();
+		
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < courses.length; i++) {
+			Course c = courses[i];
+			sb.append(c.getSubject()+c.getNumber());
+			if (i != courses.length - 1)
+				sb.append("_");
+		}
+		
+		Log.d("getCurrentStudyGroups", sb.toString());
+		String coursesFormatted = sb.toString();
+		
+		GetCurrentStudyGroups asyncTask = new GetCurrentStudyGroups(this);
+		asyncTask.execute(coursesFormatted, null, profile.getUsername());
 	}
 	
 	@Override
 	public void onClick(View arg0) {
-		String course = courseET.getText().toString();
+		
+		getCurrentStudyGroupsWithSelectedCoursesAndBuilding();
+	}
+	
+	private void getCurrentStudyGroupsWithSelectedCoursesAndBuilding()
+	{
+		// courseET should have user inputed course(s)separated by whitespace.
+		String courses = courseET.getText().toString();
 		String building = buildingET.getText().toString();
 		
-		if (course.length() == 0)
-			course = null;
+		if (courses.length() == 0)
+			courses = null;
+		else
+		{
+			String[] cArr = courses.split(" "); // extract multiple courses if inputed.
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < cArr.length; i++)
+			{
+				sb.append(cArr[i]);
+				if (i != cArr.length -1)
+					sb.append("_");
+			}
+			
+			courses = sb.toString(); // courses is now formatted to be used as a parameter for RESTful API
+		}
 		
 		if (building.length() == 0)
 			building = null;
 		
-		GetStudyGroups asyncTask = new GetStudyGroups(this);
-		asyncTask.execute(course, building);
+		GetCurrentStudyGroups asyncTask = new GetCurrentStudyGroups(this);
+		asyncTask.execute(courses, building, null); // set user(3rd parameter) null because we're not finding any user associated group
 	}
 	
-	public void receiveGetStudyGroupsResultFromMySQL(StudyGroup[] studyGroups)
+	public void receiveGetCurrentStudyGroupsResultFromMySQL(StudyGroup[] currentGroups, StudyGroup myGroup)
 	{	
-		this.studyGroups = studyGroups;
+		final String TAG = "receiveGetCurrentStudyGroupsResultFromMySQL";
 		
-		if (studyGroups == null)
+		this.studyGroups = currentGroups;
+		
+		if (this.studyGroups == null)
 		{
-			Log.e("receiveGetStudyGroupsResultFromMySQL", "studyGroups is null");
+			Log.e(TAG, "studyGroups is null. This should not happen.");
 			return;
 		}
 		
-		// DEBUG PURPOSES: printing result
+		// DEBUG PURPOSES: printing allGroups result
 		for (int i = 0; i < this.studyGroups.length; i++)
 		{
 			StudyGroup group = this.studyGroups[i];
 			
-			Log.d("receiveGetStudyGroupsResultFromMySQL()", group.toString() + "\n");
+			Log.d(TAG, group.toString() + "\n");
 		}
+		
+		// DEBUG PURPOSES: printing myGroup
+		Log.d(TAG, "myGroup: " + myGroup);
+		if (myGroup == null)
+			Log.d(TAG, "myGroup is null buddy");
 
 		// Add to list view
 	    adapter = new MySimpleArrayAdapter(getActivity(), this.studyGroups);
@@ -113,7 +159,24 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 			}
 	    	
 	    });
+	    
+	    // myGroup is null if [(user parameter was null) OR (user parameter is not null and no associated group was found)]
+	    if (myGroup != null)
+	    {
+	    	
+	    }
 	}
+	
+	// TODO What to do with this function? Will come back to it later.
+//	public void addUserStudyGroupFromAppCoreActivity(StudyGroup group)
+//	{
+//		adapter.add(group);
+//		adapter.notifyDataSetChanged();
+//		
+//		final String TAG = "addUserStudyGroupFromAppCoreActivity";
+//		Log.d(TAG, "studyGroups.length: " + studyGroups.length);
+//		Log.d(TAG, "adapter.values.length: " + adapter.values.length);
+//	}
 	
 	private class MySimpleArrayAdapter extends ArrayAdapter<StudyGroup> {
 

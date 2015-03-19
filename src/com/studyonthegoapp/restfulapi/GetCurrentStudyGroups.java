@@ -17,14 +17,16 @@ import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.search.SearchStudyGroupsFragment;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
-public class GetStudyGroups extends AsyncTask<String, Void, Void>
+public class GetCurrentStudyGroups extends AsyncTask<String, Void, Void>
 {	
 	
 	private StudyGroup[] studyGroups;
+	private StudyGroup myGroup;
 	private SearchStudyGroupsFragment searchStudyGroupFragment;
 	
-	public GetStudyGroups(SearchStudyGroupsFragment instance)
+	public GetCurrentStudyGroups(SearchStudyGroupsFragment instance)
 	{
 		searchStudyGroupFragment = instance;
 	}
@@ -32,43 +34,55 @@ public class GetStudyGroups extends AsyncTask<String, Void, Void>
 	@Override
 	protected Void doInBackground(String... params) {
 		
-		String course = params[0];
+		String courses = params[0];
 		String building = params[1];
+		String user = params[2];
 		
-		String url;		
-		if (course == null && building == null)
-			url = "http://www.studyonthegoapp.com/rest/studygroups/show";
-		else
+		String url = "http://www.studyonthegoapp.com/rest/studygroups/show/current";
+		
+		if (courses != null || building != null || user != null)
 		{
-			if (course != null) {
+			int paramCount = 0;
+			url += "?";
+			
+			if (courses != null)
+			{
 				try {
-					course = URLEncoder.encode(params[0], "UTF-8");
+					courses = URLEncoder.encode(params[0], "UTF-8");
 				} catch (UnsupportedEncodingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				url += "courses="+courses;
+				paramCount++;
 			}
 			
-			if (building != null) {
+			if (building != null)
+			{
 				try {
 					building = URLEncoder.encode(params[1], "UTF-8");
 				} catch (UnsupportedEncodingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				
+				if (paramCount > 0)
+					url += "&";
+				
+				url += "building="+building;
+				paramCount++;
 			}
 			
-			if (course != null && building == null)
+			if (user!= null)
 			{
-				url = "http://www.studyonthegoapp.com/rest/studygroups/show?course="+course;
+				if (paramCount > 0)
+					url += "&";
+				
+				url += "user="+user;
 			}
-			else if (course == null && building != null)
-				url = "http://www.studyonthegoapp.com/rest/studygroups/show?building="+building;
-			else
-				url = "http://www.studyonthegoapp.com/rest/studygroups/show?course="+course+"&building="+building;
+			
 		}
-		
-//		String url = "http://www.studyonthegoapp.com/rest/studygroups/show";
 		
 		StringBuffer response = new StringBuffer();
 		
@@ -98,7 +112,7 @@ public class GetStudyGroups extends AsyncTask<String, Void, Void>
 			in.close();
 	 
 			//print result
-//			System.out.println(response.toString());
+			System.out.println(response.toString());
 		
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -108,15 +122,20 @@ public class GetStudyGroups extends AsyncTask<String, Void, Void>
 			e.printStackTrace();
 		}
 		
+		JSONObject jObject = null;
+		
 		try
 		{
-			JSONArray jArray = new JSONArray(response.toString());
-		
-			studyGroups = new StudyGroup[jArray.length()];
+			jObject = new JSONObject(response.toString());
 			
-			for(int i = 0; i < jArray.length(); i++)
+			JSONArray jArrAllGroups = jObject.getJSONArray("currentGroups");
+			
+		
+			studyGroups = new StudyGroup[jArrAllGroups.length()];
+			
+			for(int i = 0; i < jArrAllGroups.length(); i++)
 			{
-			   JSONObject jsonObject = jArray.getJSONObject(i);
+			   JSONObject jsonObject = jArrAllGroups.getJSONObject(i);
 	
 			   studyGroups[i] = new StudyGroup(jsonObject);
 			}
@@ -124,6 +143,26 @@ public class GetStudyGroups extends AsyncTask<String, Void, Void>
 		catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		try 
+		{
+			if (jObject == null)
+				throw new NullPointerException();
+			
+			JSONObject jObjMyGroup = jObject.getJSONObject("myGroup");
+			myGroup = new StudyGroup(jObjMyGroup);
+			
+		}
+		catch (NullPointerException e)
+		{
+			e.printStackTrace();
+		}
+		catch (JSONException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+			Log.d("doInBackground", "myGroup JSONObject is null");			
+			myGroup = null;
 		}
         
         return null;
@@ -133,7 +172,7 @@ public class GetStudyGroups extends AsyncTask<String, Void, Void>
 	protected void onPostExecute(Void v)
 	{
 		// Return the results to Messaging activity
-		searchStudyGroupFragment.receiveGetStudyGroupsResultFromMySQL(studyGroups);
+		searchStudyGroupFragment.receiveGetCurrentStudyGroupsResultFromMySQL(studyGroups, myGroup);
 	}
 
 }

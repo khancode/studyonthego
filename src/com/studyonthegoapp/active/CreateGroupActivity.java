@@ -171,7 +171,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
         alert11.show();
 	}
 	
-	public void sendDataBackToParentFragment(StudyGroup group) {
+	private void sendDataBackToParentFragment(StudyGroup group) {
 		Intent data = new Intent();
     	data.putExtra("studyGroup", group);
     	// Activity finished ok, return the data

@@ -44,7 +44,7 @@
 		<string name="admin_of_group"><b>Admin of this group.</b></string>
 
     <!-- fragment_search_study_groups.xml -->
-    <string name="course_hint"><i>Course</i></string>
+    <string name="course_hint"><i>Course(s)</i></string>
     <string name="building_hint"><i>Building</i></string>
     <string name="search_button_label">Search</string>
 

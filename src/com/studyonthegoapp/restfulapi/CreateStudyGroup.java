@@ -111,7 +111,7 @@ public class CreateStudyGroup extends AsyncTask<String, Void, Void>
 		
 			groupNameExists = jsonObj.getBoolean("groupNameExists");
 			insertError = jsonObj.getBoolean("insertError");
-			groupId = jsonObj.getInt("groupId");
+			groupId = jsonObj.getInt("GroupID");
 		}
 		catch (JSONException e) {
 			// TODO Auto-generated catch block

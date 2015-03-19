@@ -28,8 +28,9 @@ public class AppCoreActivity extends ActionBarActivity {
 	private static ViewPager viewPager;
 	private ActionBar actionBar;
 	
-	public String getUsername() { return this.username; }
-	
+	private ActiveGroupFragment activeGroupFragment;
+	private SearchStudyGroupsFragment searchStudyGroupsFragment;
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,8 +46,8 @@ public class AppCoreActivity extends ActionBarActivity {
 	    actionBar.setDisplayShowTitleEnabled(true);
 			    
 	    // Create the Fragments
-	    ActiveGroupFragment activeGroupFragment = new ActiveGroupFragment();
-	    SearchStudyGroupsFragment searchStudyGroupsFragment = new SearchStudyGroupsFragment();
+	    activeGroupFragment = new ActiveGroupFragment();
+	    searchStudyGroupsFragment = new SearchStudyGroupsFragment();
 			    
 	    // ViewPager
 	    viewPager = (ViewPager) findViewById(R.id.pager);
@@ -107,6 +108,7 @@ public class AppCoreActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 	
 	public static class TabsPagerAdapter extends FragmentPagerAdapter
 	{

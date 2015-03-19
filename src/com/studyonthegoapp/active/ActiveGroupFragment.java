@@ -41,7 +41,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		return view;
 	}
 	
-	/** Immediately called after being instantiated */
+	/** Immediately called after being instantiated (because of dummy data) */
 	public void setProfileFromAppCoreActivity(Profile profile)
 	{ 
 		this.profile = profile; 
