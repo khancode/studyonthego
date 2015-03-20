@@ -3,7 +3,9 @@ package com.studyonthegoapp.active;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.Profile;
+import com.studyonthegoapp.oop.RequestsToJoin;
 import com.studyonthegoapp.oop.StudyGroup;
+import com.studyonthegoapp.restfulapi.GetUserActiveGroup;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,14 +47,11 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	/** Immediately called after being instantiated (because of dummy data) */
 	public void setProfileFromAppCoreActivity(Profile profile)
 	{ 
-		this.profile = profile; 
+		this.profile = profile;
+		
+		getUserActiveGroup();
 	}
 	
-	/** Called from SearchStudyGroupsFragment */
-	public void getUserAdminGroupFromSearchStudyGroupsFragment(StudyGroup group)
-	{
-		replaceInnerFragmentWithAdminGroup(group);
-	}
 	
 	@Override
 	public void onClick(View arg0) {
@@ -81,7 +81,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		        StudyGroup group = (StudyGroup) data.getExtras().getParcelable("studyGroup");
 //		        Log.d("onActivityResult", "group: " + group.toString());
 		        
-		        replaceInnerFragmentWithAdminGroup(group);
+		        replaceInnerFragmentWithAdminGroup(group, null);
 		    }
 		}
 	}
@@ -94,7 +94,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		transaction.commit();
 	}
 	
-	private void replaceInnerFragmentWithAdminGroup(StudyGroup group)
+	private void replaceInnerFragmentWithAdminGroup(StudyGroup group, RequestsToJoin requests)
 	{
 		FragmentTransaction transaction = manager.beginTransaction();
 		
@@ -105,6 +105,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		// Use bundle so AdminGroupInnerFragment can access StudyGroup object.
 		Bundle args = new Bundle();
 		args.putParcelable("studyGroup", group);
+		args.putParcelable("requestsToJoin", requests);
 		adminGroup.setArguments(args);
 		
 		transaction.add(id.frameContainer, adminGroup, "adminGroup");
@@ -112,6 +113,26 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		transaction.commit();
 	}
 	
+	private void getUserActiveGroup()
+	{
+		GetUserActiveGroup asyncTask = new GetUserActiveGroup(this);
+		asyncTask.execute(profile.getUsername());
+	}
+	
+	public void receiveUserActiveGroupResult(StudyGroup group, boolean isAdmin, RequestsToJoin requests)
+	{
+		final String TAG = "receiveUserActiveGroupResult";
+		
+		if (group == null) {
+			Log.d(TAG, "studyGroup is null. Thus, no user active group found.");
+			return;
+		}
+		
+		if (isAdmin)
+		{
+			replaceInnerFragmentWithAdminGroup(group, requests);
+		}
+	}
 	
 //	private void removeFragment()
 //	{

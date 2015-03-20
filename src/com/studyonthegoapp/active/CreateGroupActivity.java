@@ -99,7 +99,6 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	@Override
 	public void onClick(View arg0) {
 		groupName = groupNameET.getText().toString();
-		int courseId = course.getId(); 
 		description = descriptionET.getText().toString();
 		building = buildingET.getText().toString();
 		location = locationET.getText().toString();
@@ -111,7 +110,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		
 		Log.d("OnClick", "groupName: " + groupName +
 						 "\nadmin: " + admin +
-						 "\ncourse: " + courseId +
+						 "\ncourse: " + course.getId() +
 						 "\ndescription: " + description +
 						 "\nbuilding: " + building +
 						 "\nlocation: " + location +
@@ -121,28 +120,34 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 						 "\nendTime: " + endTime +
 						 "\nmembersLimit: " + membersLimit);
 		
-		CreateStudyGroup asyncTask = new CreateStudyGroup(this);
-		asyncTask.execute(admin, groupName, Integer.toString(courseId), description, building,
-						  location, startDate, endDate, startTime, endTime, Integer.toString(membersLimit));
-		
+		createStudyGroup();
 	}
 	
-	public void receiveCreateStudyGroupResultFromMySQL(boolean groupNameExists, boolean insertError, int groupId)
+	private void createStudyGroup()
 	{
-		Log.d("receiveCreateStudyGroupResultFromMySQL", "groupNameExists: " + groupNameExists +
-														"\ninsertError: " + insertError +
+		CreateStudyGroup asyncTask = new CreateStudyGroup(this);
+		asyncTask.execute(admin, groupName, Integer.toString(course.getId()), description, building,
+						  location, startDate, endDate, startTime, endTime, Integer.toString(membersLimit));
+	}
+	
+	public void receiveCreateStudyGroupResult(boolean groupNameExists, boolean insertStudyGroupError,
+											  boolean insertMemberError, int groupId)
+	{
+		Log.d("receiveCreateStudyGroupResult", "groupNameExists: " + groupNameExists +
+														"\ninsertStudyGroupError: " + insertStudyGroupError +
+														"\ninsertMemberError: " + insertMemberError +
 														"\ngroupId: " + groupId);
 		
 		if (groupNameExists)
 			groupNameET.setError("Group name already exists! :o");
-		else if (groupNameExists == false && insertError)
+		else if (groupNameExists == false && (insertStudyGroupError || insertMemberError))
 		{
 			Toast toast = Toast.makeText(this, 
 					"Error: Please try creating group again.", Toast.LENGTH_SHORT);  
 			toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
 			toast.show();
 		}
-		else if (groupNameExists == false && insertError == false)
+		else if (groupNameExists == false && insertStudyGroupError == false && insertMemberError == false)
 		{
 			StudyGroup group = new StudyGroup(groupId, groupName, admin, course.getId(), 
 											  course.getSubject(), course.getNumber(), course.getSection(),

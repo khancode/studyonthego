@@ -1,6 +1,5 @@
 package com.studyonthegoapp.search;
 
-import com.studyonthegoapp.activity.AppCoreActivity;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.Course;
@@ -37,8 +36,6 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	
 	private Profile profile;
 	
-	private AppCoreActivity parentActivity;
-
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState)
 	{
@@ -54,8 +51,6 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 		studyGroups = null;
 		
 		profile = null;
-		
-		parentActivity = (AppCoreActivity) getActivity();
 		
 		return view;
 	}
@@ -122,7 +117,7 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 		asyncTask.execute(courses, building, null); // set user(3rd parameter) null because we're not finding any user associated group
 	}
 	
-	public void receiveGetCurrentStudyGroupsResultFromMySQL(StudyGroup[] currentGroups, StudyGroup myGroup)
+	public void receiveGetCurrentStudyGroupsResult(StudyGroup[] currentGroups)
 	{	
 		final String TAG = "receiveGetCurrentStudyGroupsResultFromMySQL";
 		
@@ -141,11 +136,6 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 			
 			Log.d(TAG, group.toString() + "\n");
 		}
-		
-		// DEBUG PURPOSES: printing myGroup
-		Log.d(TAG, "myGroup: " + myGroup);
-		if (myGroup == null)
-			Log.d(TAG, "myGroup is null buddy");
 
 		// Add to list view
 	    adapter = new MySimpleArrayAdapter(getActivity(), this.studyGroups);
@@ -167,11 +157,6 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	    	
 	    });
 	    
-	    // myGroup is null if [(user parameter was null) OR (user parameter is not null and no associated group was found)]
-	    if (myGroup != null)
-	    {
-	    	parentActivity.getActiveGroupFragment().getUserAdminGroupFromSearchStudyGroupsFragment(myGroup);
-	    }
 	}
 	
 	// TODO What to do with this function? Will come back to it later.

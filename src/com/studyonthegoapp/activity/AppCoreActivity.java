@@ -88,7 +88,8 @@ public class AppCoreActivity extends ActionBarActivity {
 	    					 new Course(4, "CS", 3600, "A"),
 	    					 new Course(5, "CS", 3251, "B") };
 	    
-	    this.profile = new Profile(username, courses);
+	    this.profile = new Profile(username, "Omar", "Khan", courses, "Computer Science",
+	    						   "Senior", "Java, C, Python, JavaScript, PHP, Android");
 	    activeGroupFragment.setProfileFromAppCoreActivity(profile);
 	    searchStudyGroupsFragment.setProfileFromAppCoreActivity(profile);
 	}

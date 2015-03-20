@@ -1,5 +1,8 @@
 package com.studyonthegoapp.oop;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,12 +13,26 @@ public class Course implements Parcelable {
 	private int number;
 	private String section;
 	
+	/* Constructor for inserting dummy data */
 	public Course(int id, String subject, int number, String section)
 	{
 		this.id = id;
 		this.subject = subject;
 		this.number = number;
 		this.section = section;
+	}
+	
+	public Course(JSONObject jObject)
+	{
+		try {
+			this.id = jObject.getInt("CourseID");
+			this.subject = jObject.getString("Subject");
+			this.number = jObject.getInt("CourseNumber");
+			this.section = jObject.getString("Section");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Course(Parcel parcel)

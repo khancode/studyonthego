@@ -17,18 +17,16 @@ import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.search.SearchStudyGroupsFragment;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class GetCurrentStudyGroups extends AsyncTask<String, Void, Void>
 {	
 	
 	private StudyGroup[] studyGroups;
-	private StudyGroup myGroup;
-	private SearchStudyGroupsFragment searchStudyGroupFragment;
+	private SearchStudyGroupsFragment searchStudyGroupsFragment;
 	
 	public GetCurrentStudyGroups(SearchStudyGroupsFragment instance)
 	{
-		searchStudyGroupFragment = instance;
+		searchStudyGroupsFragment = instance;
 	}
 
 	@Override
@@ -36,11 +34,10 @@ public class GetCurrentStudyGroups extends AsyncTask<String, Void, Void>
 		
 		String courses = params[0];
 		String building = params[1];
-		String user = params[2];
 		
 		String url = "http://www.studyonthegoapp.com/rest/studygroups/show/current";
 		
-		if (courses != null || building != null || user != null)
+		if (courses != null || building != null)
 		{
 			int paramCount = 0;
 			url += "?";
@@ -72,14 +69,6 @@ public class GetCurrentStudyGroups extends AsyncTask<String, Void, Void>
 				
 				url += "building="+building;
 				paramCount++;
-			}
-			
-			if (user!= null)
-			{
-				if (paramCount > 0)
-					url += "&";
-				
-				url += "user="+user;
 			}
 			
 		}
@@ -122,20 +111,15 @@ public class GetCurrentStudyGroups extends AsyncTask<String, Void, Void>
 			e.printStackTrace();
 		}
 		
-		JSONObject jObject = null;
-		
 		try
 		{
-			jObject = new JSONObject(response.toString());
-			
-			JSONArray jArrAllGroups = jObject.getJSONArray("currentGroups");
-			
+			JSONArray jArray = new JSONArray(response.toString());
 		
-			studyGroups = new StudyGroup[jArrAllGroups.length()];
+			studyGroups = new StudyGroup[jArray.length()];
 			
-			for(int i = 0; i < jArrAllGroups.length(); i++)
+			for(int i = 0; i < jArray.length(); i++)
 			{
-			   JSONObject jsonObject = jArrAllGroups.getJSONObject(i);
+			   JSONObject jsonObject = jArray.getJSONObject(i);
 	
 			   studyGroups[i] = new StudyGroup(jsonObject);
 			}
@@ -145,25 +129,6 @@ public class GetCurrentStudyGroups extends AsyncTask<String, Void, Void>
 			e.printStackTrace();
 		}
 		
-		try 
-		{
-			if (jObject == null)
-				throw new NullPointerException();
-			
-			JSONObject jObjMyGroup = jObject.getJSONObject("myGroup");
-			myGroup = new StudyGroup(jObjMyGroup);
-			
-		}
-		catch (NullPointerException e)
-		{
-			e.printStackTrace();
-		}
-		catch (JSONException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
-			Log.d("doInBackground", "myGroup JSONObject is null");			
-			myGroup = null;
-		}
         
         return null;
 	}
@@ -171,8 +136,8 @@ public class GetCurrentStudyGroups extends AsyncTask<String, Void, Void>
 	@Override
 	protected void onPostExecute(Void v)
 	{
-		// Return the results to Messaging activity
-		searchStudyGroupFragment.receiveGetCurrentStudyGroupsResultFromMySQL(studyGroups, myGroup);
+		// Return the results to SearchStudyGroupsFragment
+		searchStudyGroupsFragment.receiveGetCurrentStudyGroupsResult(studyGroups);
 	}
 
 }
