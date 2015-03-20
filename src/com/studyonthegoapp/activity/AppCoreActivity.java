@@ -4,6 +4,7 @@ import com.studyonthegoapp.active.ActiveGroupFragment;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.Profile;
+import com.studyonthegoapp.profile.ProfileFragment;
 import com.studyonthegoapp.search.SearchStudyGroupsFragment;
 
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ public class AppCoreActivity extends ActionBarActivity {
 	
 	private ActiveGroupFragment activeGroupFragment;
 	private SearchStudyGroupsFragment searchStudyGroupsFragment;
+	private ProfileFragment profileFragment;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +50,11 @@ public class AppCoreActivity extends ActionBarActivity {
 	    // Create the Fragments
 	    activeGroupFragment = new ActiveGroupFragment();
 	    searchStudyGroupsFragment = new SearchStudyGroupsFragment();
+	    profileFragment = new ProfileFragment();
 			    
 	    // ViewPager
 	    viewPager = (ViewPager) findViewById(R.id.pager);
-	    viewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager(), activeGroupFragment, searchStudyGroupsFragment));
+	    viewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager(), activeGroupFragment, searchStudyGroupsFragment, profileFragment));
 	    viewPager.setOffscreenPageLimit(2); 
 	    viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -77,7 +80,7 @@ public class AppCoreActivity extends ActionBarActivity {
 
 	    actionBar.addTab(actionBar.newTab().setText("Active").setTabListener(new TabListener<ActiveGroupFragment>(activeGroupFragment)));
 	    actionBar.addTab(actionBar.newTab().setText("Search").setTabListener(new TabListener<SearchStudyGroupsFragment>(searchStudyGroupsFragment)));
-
+	    actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(new TabListener<SearchStudyGroupsFragment>(profileFragment)));
 	    
 	    // TODO Get courses from either T-Square API or MySQL
 	    // dummy courses data for now
@@ -116,12 +119,16 @@ public class AppCoreActivity extends ActionBarActivity {
 	{
 		ActiveGroupFragment active_frag;
 		SearchStudyGroupsFragment search_frag;
+		ProfileFragment profile_frag;
 
-		public TabsPagerAdapter(FragmentManager fm, ActiveGroupFragment active_frag, SearchStudyGroupsFragment search_frag) { //, FriendsFragment friends_frag, MessagingFragment messaging_frag) {
+		public TabsPagerAdapter(FragmentManager fm, ActiveGroupFragment active_frag, SearchStudyGroupsFragment search_frag,
+								ProfileFragment profile_frag)
+		{
 			super(fm);
 			// TODO Auto-generated constructor stub
 			this.active_frag = active_frag;
 			this.search_frag = search_frag;
+			this.profile_frag = profile_frag;
 		}
 
 		@Override
@@ -133,6 +140,8 @@ public class AppCoreActivity extends ActionBarActivity {
 					return active_frag;
 				case 1:
 					return search_frag;
+				case 2:
+					return profile_frag;
 				default:
 					return null;
 			}
@@ -141,7 +150,7 @@ public class AppCoreActivity extends ActionBarActivity {
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 2;
+			return 3;
 		}
 		
 	}
@@ -171,7 +180,7 @@ public class AppCoreActivity extends ActionBarActivity {
 	    public void onTabSelected(Tab tab, FragmentTransaction ft) {
 	        viewPager.setCurrentItem(tab.getPosition());
 	        
-	        Log.v("onTabSelected", "called!");
+//	        Log.v("onTabSelected", "called!");
 	        
 //	        if (mFragment instanceof FriendsFragment)
 //	        	((FriendsFragment) mFragment).getFriendRequestsAndFriends();
