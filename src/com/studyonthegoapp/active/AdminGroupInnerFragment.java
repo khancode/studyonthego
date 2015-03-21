@@ -2,6 +2,7 @@ package com.studyonthegoapp.active;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
+import com.studyonthegoapp.oop.Members;
 import com.studyonthegoapp.oop.RequestsToJoin;
 import com.studyonthegoapp.oop.StudyGroup;
 
@@ -29,7 +30,6 @@ public class AdminGroupInnerFragment extends Fragment {
 	private EditText membersLimitET;
 	
 	private StudyGroup group;
-	private RequestsToJoin requests;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState)
@@ -38,13 +38,21 @@ public class AdminGroupInnerFragment extends Fragment {
 		
 		Bundle bundle = getArguments();
 		group = bundle.getParcelable("studyGroup");
-		requests = bundle.getParcelable("requestsToJoin");
 		
+		final String TAG = "AdminGroupInnerFragment";
+		
+		RequestsToJoin requests = group.getRequestsToJoin();
 		if (requests.length() == 0)
-			Log.d("AdminGroupInnerFragment", "No requests found");
+			Log.d(TAG, "No requests found");
 		else
-			Log.d("AdminGroupInnerFragment", "requests found: " + requests);
+			Log.d(TAG, "requests found: " + requests);
 		
+		Members members = group.getMembers();
+		if (members.length() == 1)
+			Log.d(TAG, "The user is the only member of this group");
+		else
+			Log.d(TAG, "members: " + group.getMembers());
+				
 		groupNameTV = (TextView) view.findViewById(id.groupNameTextView);
 		courseET = (EditText) view.findViewById(id.courseEditText);
 		descriptionET = (EditText) view.findViewById(id.descriptionEditText);

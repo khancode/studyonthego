@@ -25,6 +25,9 @@ public class StudyGroup implements Parcelable{
 	private int membersCount;
 	private int membersLimit;
 	
+	private Members members;
+	private RequestsToJoin requestsToJoin;
+	
 	public StudyGroup(JSONObject jsonObj)
 	{
 		try
@@ -47,6 +50,13 @@ public class StudyGroup implements Parcelable{
 			
 			this.membersCount = jsonObj.getInt("MembersCount");
 			this.membersLimit = jsonObj.getInt("MembersLimit");
+			
+			this.members = new Members(jsonObj.getJSONArray("members"));
+			
+			if (jsonObj.has("requestsToJoin"))
+				this.requestsToJoin = new RequestsToJoin(jsonObj.getJSONArray("requestsToJoin"));
+			else
+				this.requestsToJoin = null; // null means user is not admin
 		}
 		catch (JSONException e)
 		{
@@ -99,7 +109,12 @@ public class StudyGroup implements Parcelable{
 		
 		this.membersCount = parcel.readInt();
 		this.membersLimit = parcel.readInt();
+		
+		this.members = parcel.readParcelable(getClass().getClassLoader());
+		this.requestsToJoin = parcel.readParcelable(getClass().getClassLoader());
 	}
+	
+	public boolean isAdmin(String username) { return username.equalsIgnoreCase(admin); }
 	
 	public int getGroupId() { return this.groupId; }
 	public String getGroupName() { return this.groupName; }
@@ -117,6 +132,9 @@ public class StudyGroup implements Parcelable{
 	public String getEndTime() { return this.endTime; }
 	public int getMembersCount() { return this.membersCount; }
 	public int getMembersLimit() { return this.membersLimit; }
+	
+	public Members getMembers() { return this.members; }
+	public RequestsToJoin getRequestsToJoin() { return this.requestsToJoin; }
 	
 	@Override
 	public String toString()
@@ -158,7 +176,7 @@ public class StudyGroup implements Parcelable{
 	}
 
 	@Override
-	public void writeToParcel(Parcel parcel, int i) {
+	public void writeToParcel(Parcel parcel, int flags) {
 
 		parcel.writeInt(groupId);
 		parcel.writeString(groupName);
@@ -177,5 +195,7 @@ public class StudyGroup implements Parcelable{
 		parcel.writeInt(membersCount);
 		parcel.writeInt(membersLimit);
 		
+		parcel.writeParcelable(members, flags);
+		parcel.writeParcelable(requestsToJoin, flags);
 	}
 }

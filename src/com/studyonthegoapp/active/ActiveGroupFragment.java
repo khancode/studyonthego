@@ -3,7 +3,6 @@ package com.studyonthegoapp.active;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.Profile;
-import com.studyonthegoapp.oop.RequestsToJoin;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.restfulapi.GetUserActiveGroup;
 
@@ -81,7 +80,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		        StudyGroup group = (StudyGroup) data.getExtras().getParcelable("studyGroup");
 //		        Log.d("onActivityResult", "group: " + group.toString());
 		        
-		        replaceInnerFragmentWithAdminGroup(group, null);
+		        replaceInnerFragmentWithAdminGroup(group);
 		    }
 		}
 	}
@@ -94,7 +93,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		transaction.commit();
 	}
 	
-	private void replaceInnerFragmentWithAdminGroup(StudyGroup group, RequestsToJoin requests)
+	private void replaceInnerFragmentWithAdminGroup(StudyGroup group)
 	{
 		FragmentTransaction transaction = manager.beginTransaction();
 		
@@ -105,7 +104,6 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		// Use bundle so AdminGroupInnerFragment can access StudyGroup object.
 		Bundle args = new Bundle();
 		args.putParcelable("studyGroup", group);
-		args.putParcelable("requestsToJoin", requests);
 		adminGroup.setArguments(args);
 		
 		transaction.add(id.frameContainer, adminGroup, "adminGroup");
@@ -119,7 +117,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		asyncTask.execute(profile.getUsername());
 	}
 	
-	public void receiveUserActiveGroupResult(StudyGroup group, boolean isAdmin, RequestsToJoin requests)
+	public void receiveUserActiveGroupResult(StudyGroup group)
 	{
 		final String TAG = "receiveUserActiveGroupResult";
 		
@@ -128,9 +126,9 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 			return;
 		}
 		
-		if (isAdmin)
+		if (group.isAdmin(profile.getUsername()))
 		{
-			replaceInnerFragmentWithAdminGroup(group, requests);
+			replaceInnerFragmentWithAdminGroup(group);
 		}
 	}
 	

@@ -7,21 +7,18 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.studyonthegoapp.active.ActiveGroupFragment;
-import com.studyonthegoapp.oop.RequestsToJoin;
 import com.studyonthegoapp.oop.StudyGroup;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
 {	
 	private StudyGroup studyGroup;
-	private boolean isAdmin;
-	private RequestsToJoin requestsToJoin;
 	
 	private ActiveGroupFragment activeGroupFragment;
 	
@@ -35,7 +32,7 @@ public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
 		
 		String username = params[0];
 		
-		String url = "http://www.studyonthegoapp.com/rest/studygroups/show/user/active_group?username="+username;
+		String url = "http://www.studyonthegoapp.com/rest/studygroups/show/user/active?username="+username;
 		
 		StringBuffer response = new StringBuffer();
 		
@@ -76,33 +73,18 @@ public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
 		}
 		
 		try
-		{			
+		{		
 			JSONObject jObject = new JSONObject(response.toString());
-			
-			if (jObject.isNull("userGroup") == false) 
-			{
-				JSONObject userGroup = jObject.getJSONObject("userGroup");
-				studyGroup = new StudyGroup(userGroup);
-			}
-			else
-				studyGroup = null;
-			
-			isAdmin = jObject.getBoolean("isAdmin");
-			
-			if (isAdmin)
-			{
-				JSONArray requests = jObject.getJSONArray("requestsToJoin");
-				requestsToJoin = new RequestsToJoin(requests);
 				
-//				Log.d("GetUserActiveGroup", requestsToJoin.toString());
-			}
-			else
-				requestsToJoin = null;
-			
+			studyGroup = new StudyGroup(jObject);
 		}
 		catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (response.toString().equals("null"))
+				Log.d("GetUserActiveGroup", "JSONObject is null");
+			else
+				e.printStackTrace();
+			
+			studyGroup = null;
 		}
         
         return null;
@@ -112,7 +94,7 @@ public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
 	protected void onPostExecute(Void v)
 	{
 		// Return the results to ActiveGroupFragment		
-		activeGroupFragment.receiveUserActiveGroupResult(studyGroup, isAdmin, requestsToJoin);
+		activeGroupFragment.receiveUserActiveGroupResult(studyGroup);
 	}
 
 }

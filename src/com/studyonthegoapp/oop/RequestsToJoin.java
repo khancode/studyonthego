@@ -14,11 +14,6 @@ public class RequestsToJoin implements Parcelable {
 	
 	private ArrayList<Profile> requests;
 	
-	public RequestsToJoin()
-	{
-		requests = new ArrayList<Profile>();
-	}
-	
 	public RequestsToJoin(JSONArray jArray)
 	{
 		requests = new ArrayList<Profile>();
@@ -30,7 +25,7 @@ public class RequestsToJoin implements Parcelable {
 				profileObject = jArray.getJSONObject(i);
 			}
 			catch (JSONException e) {
-				Log.e("JoinRequest()", "This should not happen");
+				Log.e("RequestsToJoin()", "This should not happen");
 			}
 			
 			requests.add(new Profile(profileObject));
@@ -79,13 +74,11 @@ public class RequestsToJoin implements Parcelable {
 
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void writeToParcel(Parcel parcel, int i) {
-		// TODO Auto-generated method stub
 		parcel.writeTypedList(requests);
 	}
 }
