@@ -3,8 +3,8 @@ package com.studyonthegoapp.search;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.Course;
-import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
+import com.studyonthegoapp.oop.User;
 import com.studyonthegoapp.restfulapi.GetCurrentStudyGroups;
 
 import android.content.Context;
@@ -34,7 +34,7 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	private MySimpleArrayAdapter adapter;
 	private StudyGroup[] studyGroups;
 	
-	private Profile profile;
+	private User user;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState)
@@ -50,22 +50,23 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 		adapter = null;	
 		studyGroups = null;
 		
-		profile = null;
-		
 		return view;
 	}
 	
 	/** Immediately called after being instantiated */
-	public void setProfileFromAppCoreActivity(Profile profile)
+	public void setUserFromAppCoreActivity(User user)
 	{
-		this.profile = profile;
+//		this.profile = profile;
+		this.user = user;
+		
+		Log.d("setUserFromAppCoreActivity", "user: " + user);
 		
 		getCurrentStudyGroupsWithUsersCourses();
 	}
 	
 	private void getCurrentStudyGroupsWithUsersCourses()
 	{
-		Course[] courses = profile.getCourses();
+		Course[] courses = user.getProfile().getCourses();
 		
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < courses.length; i++) {
@@ -79,7 +80,7 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 		String coursesFormatted = sb.toString();
 		
 		GetCurrentStudyGroups asyncTask = new GetCurrentStudyGroups(this);
-		asyncTask.execute(coursesFormatted, null, profile.getUsername());
+		asyncTask.execute(coursesFormatted, null, user.getUsername());
 	}
 	
 	@Override
@@ -142,21 +143,25 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	    listView.setAdapter(adapter);
 	    
 	    // Set OnItemClickListener
-	    final Context context = getActivity();	    
 	    listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg3) {
 				StudyGroup group = (StudyGroup) adapter.getItemAtPosition(position);
 				
-				Intent intent = new Intent(context, StudyGroupDetailsActivity.class);
-				intent.putExtra("profile", profile);
-				intent.putExtra("studyGroup", group);
-				startActivity(intent);
+				viewStudyGroupDetails(group);
 			}
 	    	
 	    });
 	    
+	}
+	
+	private void viewStudyGroupDetails(StudyGroup group)
+	{		
+		Intent intent = new Intent(getActivity(), StudyGroupDetailsActivity.class);
+		intent.putExtra("user", user);
+		intent.putExtra("studyGroup", group);
+		startActivity(intent);
 	}
 	
 	// TODO What to do with this function? Will come back to it later.

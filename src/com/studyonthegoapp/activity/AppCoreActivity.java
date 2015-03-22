@@ -4,6 +4,7 @@ import com.studyonthegoapp.active.ActiveGroupFragment;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.Profile;
+import com.studyonthegoapp.oop.User;
 import com.studyonthegoapp.profile.ProfileFragment;
 import com.studyonthegoapp.search.SearchStudyGroupsFragment;
 
@@ -25,6 +26,7 @@ public class AppCoreActivity extends ActionBarActivity {
 
 	private String username;
 	private Profile profile;
+	private User user;
 	
 	private static ViewPager viewPager;
 	private ActionBar actionBar;
@@ -90,8 +92,11 @@ public class AppCoreActivity extends ActionBarActivity {
 	    
 	    this.profile = new Profile(username, "Omar", "Khan", courses, "Computer Science",
 	    						   "Senior", "Java, C, Python, JavaScript, PHP, Android");
-	    activeGroupFragment.setProfileFromAppCoreActivity(profile);
-	    searchStudyGroupsFragment.setProfileFromAppCoreActivity(profile);
+	    
+	    this.user = new User(username, profile);
+	    
+	    activeGroupFragment.setUserFromAppCoreActivity(user);
+	    searchStudyGroupsFragment.setUserFromAppCoreActivity(user);
 	}
 
 	@Override

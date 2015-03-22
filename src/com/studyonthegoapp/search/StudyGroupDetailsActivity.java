@@ -2,8 +2,8 @@ package com.studyonthegoapp.search;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
-import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
+import com.studyonthegoapp.oop.User;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
@@ -32,7 +32,8 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 	private TextView membersLimitTV;
 	private Button sendRequestButton;
 	
-	private Profile profile;
+//	private Profile profile;
+	private User user;
 	private StudyGroup group;
 	
 	@Override
@@ -56,10 +57,11 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 		sendRequestButton.setOnClickListener(this);
 		
 		Intent intent = getIntent();
-		profile = (Profile) intent.getExtras().getParcelable("profile");
+//		profile = (Profile) intent.getExtras().getParcelable("profile");
+		user = (User) intent.getExtras().getParcelable("user");
 		group = (StudyGroup) intent.getExtras().getParcelable("studyGroup");
 		
-		Log.d("OnCreate()", "profile: " + profile + "\n\tgroup: " + group);
+		Log.d("OnCreate()", "user: " + user + "\n\tgroup: " + group);
 		
 		groupNameTV.setText(group.getGroupName());
 		courseTV.setText(group.getSubject() + " " + group.getCourseNumber() + " " + group.getSection());

@@ -3,8 +3,8 @@ package com.studyonthegoapp.active;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.Course;
-import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
+import com.studyonthegoapp.oop.User;
 import com.studyonthegoapp.restfulapi.CreateStudyGroup;
 
 import android.app.AlertDialog;
@@ -53,7 +53,8 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	private String endTime;
 	private int membersLimit;
 	
-	private Profile profile;
+//	private Profile profile;
+	private User user;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +75,21 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		createGroupButton.setOnClickListener(this);
 		
 		Intent intent = getIntent();
-		profile = (Profile) intent.getExtras().getParcelable("profile");
-		admin = profile.getUsername();
+//		profile = (Profile) intent.getExtras().getParcelable("profile");
+//		admin = profile.getUsername();
 		
-	    MySimpleArrayAdapter dAdapter = new MySimpleArrayAdapter(this, profile.getCourses());
+		user = (User) intent.getExtras().getParcelable("user");
+		admin = user.getUsername();
+		
+		Log.d("CreateGroupActivity", "user : " + user);
+		
+	    MySimpleArrayAdapter dAdapter = new MySimpleArrayAdapter(this, user.getProfile().getCourses());
 	    courseSpinner.setAdapter(dAdapter);
 	    courseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				course = profile.getCourses()[position];
+				course = user.getProfile().getCourses()[position];
 				
 				Log.d("onItemSelected", "course: " + course);
 			}

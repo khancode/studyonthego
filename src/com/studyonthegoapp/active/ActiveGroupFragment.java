@@ -2,8 +2,8 @@ package com.studyonthegoapp.active;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
-import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
+import com.studyonthegoapp.oop.User;
 import com.studyonthegoapp.restfulapi.GetUserActiveGroup;
 
 import android.app.Activity;
@@ -27,7 +27,8 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	
 	private FragmentManager manager;
 	
-	private Profile profile;
+//	private Profile profile;
+	private User user;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState)
@@ -44,9 +45,9 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	}
 	
 	/** Immediately called after being instantiated (because of dummy data) */
-	public void setProfileFromAppCoreActivity(Profile profile)
+	public void setUserFromAppCoreActivity(User user)
 	{ 
-		this.profile = profile;
+		this.user = user;
 		
 		getUserActiveGroup();
 	}
@@ -56,7 +57,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	public void onClick(View arg0) {
 				
 		Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
-		intent.putExtra("profile", profile);
+		intent.putExtra("user", user);
 		startActivityForResult(intent, REQUEST_CODE);
 			
 	}
@@ -114,7 +115,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	private void getUserActiveGroup()
 	{
 		GetUserActiveGroup asyncTask = new GetUserActiveGroup(this);
-		asyncTask.execute(profile.getUsername());
+		asyncTask.execute(user.getUsername());
 	}
 	
 	public void receiveUserActiveGroupResult(StudyGroup group)
@@ -126,7 +127,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 			return;
 		}
 		
-		if (group.isAdmin(profile.getUsername()))
+		if (group.isAdmin(user.getUsername()))
 		{
 			replaceInnerFragmentWithAdminGroup(group);
 		}

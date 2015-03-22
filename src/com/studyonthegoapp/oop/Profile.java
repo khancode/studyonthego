@@ -56,7 +56,12 @@ public class Profile implements Parcelable {
 	public Profile(Parcel parcel)
 	{
 		this.username = parcel.readString();
+		this.firstName = parcel.readString();
+		this.lastName = parcel.readString();
 		this.courses = parcel.createTypedArray(Course.CREATOR);
+		this.major = parcel.readString();
+		this.year = parcel.readString();
+		this.skills = parcel.readString();		
 	}
 	
 	public String getUsername() { return this.username; }
@@ -102,6 +107,11 @@ public class Profile implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel parcel, int i) {
 		parcel.writeString(username);
+		parcel.writeString(firstName);
+		parcel.writeString(lastName);
 		parcel.writeTypedArray(courses, i);
+		parcel.writeString(major);
+		parcel.writeString(year);
+		parcel.writeString(skills);
 	}
 }
