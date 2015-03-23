@@ -12,11 +12,11 @@ import android.util.Log;
 
 public class RequestsToJoin implements Parcelable {
 	
-	private ArrayList<Profile> requests;
+	private ArrayList<User> requests;
 	
 	public RequestsToJoin(JSONArray jArray)
 	{
-		requests = new ArrayList<Profile>();
+		requests = new ArrayList<User>();
 		
 		for (int i = 0; i < jArray.length(); i++)
 		{
@@ -28,28 +28,28 @@ public class RequestsToJoin implements Parcelable {
 				Log.e("RequestsToJoin()", "This should not happen");
 			}
 			
-			requests.add(new Profile(profileObject));
+			requests.add(new User(profileObject));
 		}
 	}
 	
 	public RequestsToJoin(Parcel parcel)
 	{
-		this.requests = parcel.createTypedArrayList(Profile.CREATOR);
+		this.requests = parcel.createTypedArrayList(User.CREATOR);
 	}
 	
-	public void addRequest(Profile user)
+	public void addRequest(User user)
 	{
 		requests.add(user);
 	}
 	
-	public void removeRequest(Profile user)
+	public void removeRequest(User user)
 	{
 		requests.remove(user);
 	}
 	
 	public int length() { return this.requests.size(); }
 	
-	public ArrayList<Profile> getRequests() { return this.requests; }
+	public ArrayList<User> getRequests() { return this.requests; }
 	
 	@Override
 	public String toString()

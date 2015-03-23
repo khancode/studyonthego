@@ -56,10 +56,7 @@ public class SearchStudyGroupsFragment extends Fragment implements OnClickListen
 	/** Immediately called after being instantiated */
 	public void setUserFromAppCoreActivity(User user)
 	{
-//		this.profile = profile;
 		this.user = user;
-		
-		Log.d("setUserFromAppCoreActivity", "user: " + user);
 		
 		getCurrentStudyGroupsWithUsersCourses();
 	}

@@ -154,7 +154,9 @@ public class StudyGroup implements Parcelable{
 			   "StartTime: " + this.startTime + "\n" +
 			   "EndTime: " + this.endTime + "\n" +
 			   "MembersCount: " + this.membersCount + "\n" +
-			   "MembersLimit: " + this.membersLimit;
+			   "MembersLimit: " + this.membersLimit + "\n" + 
+			   "Members: " + this.members + "\n" + 
+			   "RequestsToJoin: " + this.requestsToJoin;
 	}
 	
 	public static final Parcelable.Creator<StudyGroup> CREATOR = new Creator<StudyGroup>() {  

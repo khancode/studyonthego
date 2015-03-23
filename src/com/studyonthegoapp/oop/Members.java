@@ -12,16 +12,16 @@ import android.util.Log;
 
 public class Members implements Parcelable {
 	
-	private ArrayList<Profile> members;
+	private ArrayList<User> members;
 	
 	public Members()
 	{
-		this.members = new ArrayList<Profile>();
+		this.members = new ArrayList<User>();
 	}
 	
 	public Members(JSONArray jArray)
 	{
-		members = new ArrayList<Profile>();
+		members = new ArrayList<User>();
 		
 		for (int i = 0; i < jArray.length(); i++)
 		{
@@ -33,18 +33,18 @@ public class Members implements Parcelable {
 				Log.e("Memberse()", "This should not happen");
 			}
 			
-			members.add(new Profile(profileObject));
+			members.add(new User(profileObject));
 		}
 	}
 	
 	public Members(Parcel parcel)
 	{
-		this.members = parcel.createTypedArrayList(Profile.CREATOR);
+		this.members = parcel.createTypedArrayList(User.CREATOR);
 	}
 	
 	public int length()	{ return this.members.size(); }
 	
-	public ArrayList<Profile> getProfiles() { return this.members; }
+	public ArrayList<User> getUsers() { return this.members; }
 	
 	@Override
 	public String toString()
