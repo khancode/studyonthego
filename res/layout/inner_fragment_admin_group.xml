@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#addae6" >
+	    android:id="@+id/scrollView1"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:fillViewport="true"
+	    android:background="#addae6" >
 
 	<TableLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" >
+	    android:layout_height="wrap_content">
 	
-	    <TableRow
-	        android:id="@+id/tableRow0"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:gravity="center_horizontal" >
-	
-	        <Button
-	            android:id="@+id/viewRequestsGroupbutton"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="View Requests" />
-	                
-	    </TableRow>
 	    
 	    <TableRow
 	        android:id="@+id/tableRow1"
@@ -56,14 +45,13 @@
 	            android:textAppearance="?android:attr/textAppearanceMedium"
 	            android:text="@string/course_label" />
 	
-	        <EditText
-	            android:id="@+id/courseEditText"
+	        <TextView
+	            android:id="@+id/courseTextView"
 	            android:layout_width="0dip"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:ems="10"
-	            android:focusable="false"
-	            android:inputType="text" />
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/course_label" />
 	
 	    </TableRow>
 	    
@@ -79,14 +67,13 @@
 	            android:textAppearance="?android:attr/textAppearanceMedium"
 	            android:text="@string/description_label" />
 	
-	        <EditText
-	            android:id="@+id/descriptionEditText"
+	        <TextView
+	            android:id="@+id/descriptionTextView"
 	            android:layout_width="0dip"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:ems="10"
-	            android:focusable="false"
-	            android:inputType="text" />
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/description_label" />
 	
 	    </TableRow>
 	    
@@ -102,14 +89,13 @@
 	            android:textAppearance="?android:attr/textAppearanceMedium"
 	            android:text="@string/building_label" />
 	
-	        <EditText
-	            android:id="@+id/buildingEditText"
+	        <TextView
+	            android:id="@+id/buildingTextView"
 	            android:layout_width="0dip"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:ems="10"
-	            android:focusable="false"
-	            android:inputType="text" />
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/building_label" />
 	
 	    </TableRow>
 	    
@@ -125,14 +111,13 @@
 	            android:textAppearance="?android:attr/textAppearanceMedium"
 	            android:text="@string/location_label" />
 	
-	        <EditText
-	            android:id="@+id/locationEditText"
+	        <TextView
+	            android:id="@+id/locationTextView"
 	            android:layout_width="0dip"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:ems="10"
-	            android:focusable="false"
-	            android:inputType="text" />
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:text="@string/location_label" />
 	
 	    </TableRow>
 	    
@@ -156,6 +141,15 @@
 	            android:ems="10"
 	            android:focusable="false"
 	            android:inputType="date" />
+	        
+	        <EditText
+	            android:id="@+id/startTimeEditText"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:ems="10"
+	            android:focusable="false"
+	            android:inputType="time" />	  
 	
 	    </TableRow>
 	    
@@ -180,43 +174,6 @@
 	            android:focusable="false"
 	            android:inputType="date" />
 	        
-        </TableRow>
-	    
-	    <TableRow
-	        android:id="@+id/tableRow8"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" >
-	
-	        <TextView
-	            android:layout_width="0dip"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
-	            android:text="@string/start_time_label" />
-	
-	        <EditText
-	            android:id="@+id/startTimeEditText"
-	            android:layout_width="0dip"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:ems="10"
-	            android:focusable="false"
-	            android:inputType="time" />	        
-	
-	    </TableRow>
-	    
-	    <TableRow
-	        android:id="@+id/tableRow9"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" >
-	    
-		    <TextView
-	            android:layout_width="0dip"
-	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:textAppearance="?android:attr/textAppearanceMedium"
-	            android:text="@string/end_time_label" />
-	
 	        <EditText
 	            android:id="@+id/endTimeEditText"
 				android:layout_width="0dip"
@@ -225,8 +182,9 @@
 	            android:ems="10"
 	            android:focusable="false"
 	            android:inputType="time" />
-        
-        </TableRow>
+	        
+	       </TableRow>
+	    
 	    
 	    <TableRow
 	        android:id="@+id/tableRow10"
@@ -266,7 +224,23 @@
 	            android:inputType="number" />
 	
 	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/tableRow0"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <ExpandableListView
+	            android:id="@+id/requestsExpandableListView"
+	            android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:choiceMode="singleChoice"
+			    android:divider="#A4C739"
+			    android:childDivider="#0000FF"
+			    android:dividerHeight="0.5dp" >
+	        </ExpandableListView>
+	                
+	    </TableRow>
 	
 	</TableLayout>
-
 </ScrollView>

@@ -1,5 +1,7 @@
 package com.studyonthegoapp.oop;
 
+import java.util.ArrayList;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -134,6 +136,7 @@ public class StudyGroup implements Parcelable{
 	public int getMembersLimit() { return this.membersLimit; }
 	
 	public Members getMembers() { return this.members; }
+	public ArrayList<User> getMemberUsers() { return this.members.getUsers(); }
 	public RequestsToJoin getRequestsToJoin() { return this.requestsToJoin; }
 	
 	@Override
