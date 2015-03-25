@@ -9,7 +9,7 @@
     <string name="username_label">Username:</string>
     <string name="password_label">Password:</string>
     <string name="login_button_label">Login</string>
-    <string name="title_activity_app_core">AppCoreActivity</string>
+    <string name="title_activity_app_core">Study On-The-Go</string>
 
     <!-- activity_search_study_groups.xml -->
 
@@ -33,15 +33,15 @@
     <!-- fragment_active_group.xml -->
     <string name="create_new_group_button_label">Create New Study Group</string>
 
-    	<!-- activity_create_group.xml -->
-    	<string name="title_activity_create_group">Create New Study Group</string>
-		<string name="create_group_button_label">Create Group</string>
-		
-		<!-- inner_fragment_no_group.xml -->
-		<string name="not_in_group"><b>Not in a group.</b></string>
-		
-		<!-- inner_fragment_admin_group.xml -->
-		<string name="admin_of_group"><b>Admin of this group.</b></string>
+    <!-- activity_create_group.xml -->
+    <string name="title_activity_create_group">Create New Study Group</string>
+    <string name="create_group_button_label">Create Group</string>
+
+    <!-- inner_fragment_no_group.xml -->
+    <string name="not_in_group"><b>Not in a group.</b></string>
+
+    <!-- inner_fragment_admin_group.xml -->
+    <string name="admin_of_group"><b>Admin of this group.</b></string>
 
     <!-- fragment_search_study_groups.xml -->
     <string name="course_hint"><i>Course(s)</i></string>
@@ -52,5 +52,8 @@
     <string name="group_name"><b><u>Group Name</u></b></string>
     <string name="course"><b><u>Course</u></b></string>
     <string name="building"><b><u>Building</u></b></string>
+    
+    <!-- activity_active_group_details.xml -->
+    <string name="title_activity_active_group_details">Study Group Details</string>
 
 </resources>

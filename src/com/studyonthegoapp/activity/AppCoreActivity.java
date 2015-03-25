@@ -17,6 +17,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -83,6 +85,8 @@ public class AppCoreActivity extends ActionBarActivity {
 	    actionBar.addTab(actionBar.newTab().setText("Active").setTabListener(new TabListener<ActiveGroupFragment>(activeGroupFragment)));
 	    actionBar.addTab(actionBar.newTab().setText("Search").setTabListener(new TabListener<SearchStudyGroupsFragment>(searchStudyGroupsFragment)));
 	    actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(new TabListener<SearchStudyGroupsFragment>(profileFragment)));
+	    
+	    actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
 	    
 	    // TODO Get courses from either T-Square API or MySQL
 	    // dummy courses data for now

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+        
+            <TextView
+		        android:id="@+id/groupNameTextView"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_horizontal"
+		        android:text="@string/group_name" />
+		
+		    <TextView
+		        android:id="@+id/courseTextView"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_horizontal"
+		        android:text="@string/course" />
+		
+		    <TextView
+		        android:id="@+id/buildingTextView"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_horizontal"
+		        android:text="@string/building" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+        
+            <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" />
+		
+		    <TextView
+		        android:id="@+id/requestsTextView"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_horizontal"
+		        android:text="requests" />
+		
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" />
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+        
+            <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" />
+		
+		    <TextView
+		        android:id="@+id/membersTextView"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_horizontal"
+		        android:text="members" />
+		
+		    <TextView
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content" />
+        
+    </LinearLayout>
+    
+</TableRow>
