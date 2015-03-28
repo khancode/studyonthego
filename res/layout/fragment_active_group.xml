@@ -27,21 +27,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="@string/group_name" />
+            android:text="@string/group_label" />
         
         <TextView
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Requests" />
+            android:text="@string/requests_label" />
         
         <TextView
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Members" />
+            android:text="@string/members_label" />
         
     </TableRow>
     

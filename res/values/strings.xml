@@ -27,11 +27,14 @@
     <string name="start_time_label"><b>Start Time:</b></string>
     <string name="end_time_label"><b>End Time:</b></string>
     <string name="members_count_label"><b>Members Count:</b></string>
-    <string name="members_limit_label"><b>Members Limit:</b></string>
+    <string name="members_limit_label"><b>No. Of Attendees</b></string>
     <string name="send_request_button_label">Send Request</string>
 
     <!-- fragment_active_group.xml -->
     <string name="create_new_group_button_label">Create New Study Group</string>
+    <string name="group_label"><b><u>Group</u></b></string>
+    <string name="requests_label"><b><u>Requests</u></b></string>
+    <string name="members_label"><b><u>Members</u></b></string>
 
     <!-- activity_create_group.xml -->
     <string name="title_activity_create_group">Create New Study Group</string>
@@ -54,6 +57,6 @@
     <string name="building"><b><u>Building</u></b></string>
     
     <!-- activity_active_group_details.xml -->
-    <string name="title_activity_active_group_details">Study Group Details</string>
+    <string name="title_activity_active_group_details">My Study Group</string>
 
 </resources>

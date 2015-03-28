@@ -92,7 +92,8 @@ public class AppCoreActivity extends ActionBarActivity {
 	    // dummy courses data for now
 	    Course[] courses = { new Course(1, "CS", 3451, "A"),
 	    					 new Course(4, "CS", 3600, "A"),
-	    					 new Course(5, "CS", 3251, "B") };
+	    					 new Course(5, "CS", 3251, "B"),
+	    					 new Course(3, "CS", 2200, "B")};
 	    
 	    this.profile = new Profile(username, "Omar", "Khan", courses, "Computer Science",
 	    						   "Senior", "Java, C, Python, JavaScript, PHP, Android");
