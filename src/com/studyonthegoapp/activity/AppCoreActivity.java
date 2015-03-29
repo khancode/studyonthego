@@ -86,7 +86,7 @@ public class AppCoreActivity extends ActionBarActivity {
 	    actionBar.addTab(actionBar.newTab().setText("Search").setTabListener(new TabListener<SearchStudyGroupsFragment>(searchStudyGroupsFragment)));
 	    actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(new TabListener<SearchStudyGroupsFragment>(profileFragment)));
 	    
-	    actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
+//	    actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
 	    
 	    // TODO Get courses from either T-Square API or MySQL
 	    // dummy courses data for now

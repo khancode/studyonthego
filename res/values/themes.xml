@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- the theme applied to the application or activity -->
-    <style name="CustomActionBarTheme"
-           parent="@style/AppTheme">
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
-    </style>
+    <style name="CustomActionBarTheme" parent="Theme.AppCompat.Light">
+	    <!-- customize the color palette -->
+	    <item name="colorPrimary">@color/blue</item>
+	    <item name="colorPrimaryDark">@color/highlighted_text_material_dark</item>
+	    <item name="colorAccent">@color/abc_primary_text_disable_only_material_dark</item>
+	</style>
     
     <!-- ActionBar styles -->
     <style name="MyActionBar"
            parent="@style/AppTheme">
-        <item name="android:background">#33b5e5</item>
+        <item name="android:background">@color/blue</item>
     </style>
     
 </resources>

@@ -78,7 +78,6 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 //		membersCountTV.setText(Integer.toString(group.getMembersCount()));
 		membersLimitTV.setText(Integer.toString(group.getMembersCount()) + "/" + Integer.toString(group.getMembersLimit()));
 		
-		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
 	}
 
 

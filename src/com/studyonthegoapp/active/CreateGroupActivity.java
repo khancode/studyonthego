@@ -103,8 +103,6 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	    	
 	    });
 	    
-	    
-	    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
 	}
 	
 	@Override
