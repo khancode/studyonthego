@@ -7,6 +7,14 @@
     <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+        
+    </TableRow>
+    
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
         
         <TextView
@@ -27,9 +35,9 @@
     </TableRow>
     
     <TableRow
-        android:id="@+id/tableRow2"
+        android:id="@+id/tableRow3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
         
         <TextView
 	        android:layout_width="wrap_content"
@@ -46,7 +54,7 @@
     </TableRow>
 
     <TableRow
-        android:id="@+id/tableRow3"
+        android:id="@+id/tableRow4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal" >
@@ -58,6 +66,14 @@
             android:text="@string/login_button_label"
             android:onClick="verifyLogin" />
 
+    </TableRow>
+    
+    <TableRow
+        android:id="@+id/tableRow5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3" >
+        
     </TableRow>
 
 </TableLayout>
