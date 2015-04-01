@@ -58,5 +58,14 @@
     
     <!-- activity_active_group_details.xml -->
     <string name="title_activity_active_group_details">My Study Group</string>
+    <string name="login_label">Username:</string>
+    <string name="first_name_label">First Name:</string>
+    <string name="skills_label">Skills:</string>
+    <string name="year_label">Year:</string>
+    <string name="major_label">Major:</string>
+    <string name="specialization_label">Specialization:</string>
+    <string name="last_name_label">Last Name:</string>
+    <string name="save_profile_button_label">Save</string>
+    <string name="courses_label">Courses:</string>
 
 </resources>

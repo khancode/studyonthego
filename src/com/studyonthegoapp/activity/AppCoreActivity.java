@@ -102,6 +102,7 @@ public class AppCoreActivity extends ActionBarActivity {
 	    
 	    activeGroupFragment.setUserFromAppCoreActivity(user);
 	    searchStudyGroupsFragment.setUserFromAppCoreActivity(user);
+	    profileFragment.setProfileFromAppCoreActivity(profile);
 	}
 
 	@Override
