@@ -60,6 +60,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/building_label" />
 
+        <Spinner
+            android:id="@+id/BuildingSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/buildingEditText"
             android:layout_width="0dip"

@@ -1,11 +1,14 @@
 package com.studyonthegoapp.active;
 
+import java.util.ArrayList;
+
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.oop.User;
 import com.studyonthegoapp.restfulapi.CreateStudyGroup;
+import com.studyonthegoapp.restfulapi.GetBuildings;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -103,7 +106,43 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	    	
 	    });
 	    
+	    getBuildings();
+	    
 	}
+	
+	private void getBuildings()
+	{
+		GetBuildings asyncTask = new GetBuildings(this);
+		asyncTask.execute();
+	}
+	
+	public void receiveGetBuildingsResult(ArrayList<String> buildings, int responseCode)
+	{
+		System.out.println(buildings);
+		//showAlertDialog(responseCode);
+		
+	}
+	
+	private  void showAlertDialog(final int result)
+	{
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+		builder1.setTitle("Success!");
+        builder1.setMessage("ResponseCode: "+ result);
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	
+            	//sendDataBackToParentFragment(group);
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+	}
+
+
 	
 	@Override
 	public void onClick(View arg0) {

@@ -4,6 +4,9 @@
 # project files
 .classpath
 .project
+.idea/
+.metadata/
+.settings/
 
 # Java class files
 *.class
