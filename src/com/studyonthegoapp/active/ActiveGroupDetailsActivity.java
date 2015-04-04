@@ -112,7 +112,7 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
         
         listAdapter.notifyDataSetChanged();
         
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
 	}
 	
 	private void prepareListData()

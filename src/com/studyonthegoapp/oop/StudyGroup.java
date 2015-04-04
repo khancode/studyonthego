@@ -43,7 +43,11 @@ public class StudyGroup implements Parcelable{
 			this.section = jsonObj.getString("Section");
 			this.description = jsonObj.getString("Description");
 			this.building = jsonObj.getString("Building");
-			this.location = jsonObj.getString("Location");
+			
+			if (jsonObj.has("Location"))
+				this.location = jsonObj.getString("Location");
+			else
+				this.location = null;
 			
 			this.startDate = jsonObj.getString("StartDate");
 			this.endDate = jsonObj.getString("EndDate");
@@ -53,7 +57,10 @@ public class StudyGroup implements Parcelable{
 			this.membersCount = jsonObj.getInt("MembersCount");
 			this.membersLimit = jsonObj.getInt("MembersLimit");
 			
-			this.members = new Members(jsonObj.getJSONArray("members"));
+			if (jsonObj.has("members"))
+				this.members = new Members(jsonObj.getJSONArray("members"));
+			else
+				this.members = null;
 			
 			if (jsonObj.has("requestsToJoin"))
 				this.requestsToJoin = new RequestsToJoin(jsonObj.getJSONArray("requestsToJoin"));

@@ -4,8 +4,10 @@ import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.oop.User;
+import com.studyonthegoapp.restfulapi.GetStudyGroupInfo;
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,16 +27,15 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 	private TextView adminTV;
 	private TextView descriptionTV;
 	private TextView buildingTV;
-//	private TextView locationTV;
 	private TextView startDateTV;
 	private TextView endDateTV;
 	private TextView startTimeTV;
 	private TextView endTimeTV;
-//	private TextView membersCountTV;
-	private TextView membersLimitTV;
+	private TextView noOfAttendeesTV;
 	private Button sendRequestButton;
 	
-//	private Profile profile;
+	private ProgressDialog mDialog;
+	
 	private User user;
 	private StudyGroup group;
 	
@@ -48,13 +49,11 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 		adminTV = (TextView) findViewById(id.adminTextView);
 		descriptionTV = (TextView) findViewById(id.descriptionTextView);
 		buildingTV = (TextView) findViewById(id.buildingTextView);
-//		locationTV = (TextView) findViewById(id.locationTextView);
 		startDateTV = (TextView) findViewById(id.startDateTextView);
 		endDateTV = (TextView) findViewById(id.endDateTextView);
 		startTimeTV = (TextView) findViewById(id.startTimeTextView);
 		endTimeTV = (TextView) findViewById(id.endTimeTextView);
-//		membersCountTV = (TextView) findViewById(id.membersCountTextView);
-		membersLimitTV = (TextView) findViewById(id.membersLimitTextView);
+		noOfAttendeesTV = (TextView) findViewById(id.noOfAttendeesTextView);
 		sendRequestButton = (Button) findViewById(id.sendRequestButton);
 		sendRequestButton.setOnClickListener(this);
 		
@@ -65,26 +64,56 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 		
 		Log.d("OnCreate()", "user: " + user + "\n\tgroup: " + group);
 		
-		groupNameTV.setText(group.getGroupName());
-		courseTV.setText(group.getSubject() + " " + group.getCourseNumber() + " " + group.getSection());
-		adminTV.setText(group.getAdmin());
-		descriptionTV.setText(group.getDescription());
-		buildingTV.setText(group.getBuilding());
-//		locationTV.setText(group.getLocation());
-		startDateTV.setText(group.getStartDate());
-		endDateTV.setText(group.getEndDate());
-		startTimeTV.setText(group.getStartTime());
-		endTimeTV.setText(group.getEndTime());
-//		membersCountTV.setText(Integer.toString(group.getMembersCount()));
-		membersLimitTV.setText(Integer.toString(group.getMembersCount()) + "/" + Integer.toString(group.getMembersLimit()));
+		mDialog = new ProgressDialog(this);
 		
+		getStudyGroupInfo();		
 	}
-
 
 	@Override
 	public void onClick(View view) {
 		// TODO Auto-generated method stub
 		
 		Log.d("onClick()", "NEED TO IMPLEMENT");
+	}
+	
+	private void getStudyGroupInfo()
+	{
+		mDialog.setMessage("Loading...");
+		mDialog.setCancelable(false);
+		mDialog.show();
+		
+		GetStudyGroupInfo asyncTask = new GetStudyGroupInfo(this);
+		asyncTask.execute(Integer.toString(group.getGroupId()));
+	}
+	
+	public void receiveStudyGroupInfoResult(boolean groupExists, StudyGroup studyGroup)
+	{
+		if (groupExists)
+		{
+			// Updated group details
+			this.group = studyGroup;
+			setTextViews();
+		}
+		else
+		{
+			// TODO NEED TO IMPLEMENT Group doesn't exist anymore
+			Log.d("receiveStudyGroupInfoResult()", "NEED TO IMPLEMENT: Group doesn't exist anymore");
+		}
+		
+		mDialog.cancel();
+	}
+	
+	private void setTextViews()
+	{
+		groupNameTV.setText(group.getGroupName());
+		courseTV.setText(group.getSubject() + " " + group.getCourseNumber() + " " + group.getSection());
+		adminTV.setText(group.getAdmin());
+		descriptionTV.setText(group.getDescription());
+		buildingTV.setText(group.getBuilding());
+		startDateTV.setText(group.getStartDate());
+		endDateTV.setText(group.getEndDate());
+		startTimeTV.setText(group.getStartTime());
+		endTimeTV.setText(group.getEndTime());
+		noOfAttendeesTV.setText(Integer.toString(group.getMembersCount()) + "/" + Integer.toString(group.getMembersLimit()));
 	}
 }
