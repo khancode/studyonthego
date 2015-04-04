@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,13 +17,13 @@ import com.studyonthegoapp.oop.StudyGroup;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
+public class GetUserCurrentGroups extends AsyncTask<String, Void, Void>
 {	
-	private StudyGroup studyGroup;
+	private StudyGroup[] studyGroups;
 	
 	private ActiveGroupFragment activeGroupFragment;
 	
-	public GetUserActiveGroup(ActiveGroupFragment instance)
+	public GetUserCurrentGroups(ActiveGroupFragment instance)
 	{
 		activeGroupFragment = instance;
 	}
@@ -32,7 +33,7 @@ public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
 		
 		String username = params[0];
 		
-		String url = "http://www.studyonthegoapp.com/rest/studygroups/show/user/active?username="+username;
+		String url = "http://www.studyonthegoapp.com/rest/studygroups/show/current/user?username="+username;
 		
 		StringBuffer response = new StringBuffer();
 		
@@ -74,9 +75,21 @@ public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
 		
 		try
 		{		
-			JSONObject jObject = new JSONObject(response.toString());
-				
-			studyGroup = new StudyGroup(jObject);
+//			JSONObject jObject = new JSONObject(response.toString());
+//				
+//			studyGroup = new StudyGroup(jObject);
+			
+			JSONArray jArray = new JSONArray(response.toString());
+			
+			studyGroups = new StudyGroup[jArray.length()];
+			
+			for(int i = 0; i < jArray.length(); i++)
+			{
+			   JSONObject jsonObject = jArray.getJSONObject(i);
+	
+			   studyGroups[i] = new StudyGroup(jsonObject);
+			}
+			
 		}
 		catch (JSONException e) {
 			if (response.toString().equals("null"))
@@ -84,7 +97,7 @@ public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
 			else
 				e.printStackTrace();
 			
-			studyGroup = null;
+			studyGroups = null;
 		}
         
         return null;
@@ -94,7 +107,7 @@ public class GetUserActiveGroup extends AsyncTask<String, Void, Void>
 	protected void onPostExecute(Void v)
 	{
 		// Return the results to ActiveGroupFragment		
-		activeGroupFragment.receiveUserActiveGroupResult(studyGroup);
+		activeGroupFragment.receiveUserCurrentGroupsResult(studyGroups);
 	}
 
 }

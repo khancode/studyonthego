@@ -6,7 +6,7 @@ import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.oop.User;
-import com.studyonthegoapp.restfulapi.GetUserActiveGroup;
+import com.studyonthegoapp.restfulapi.GetUserCurrentGroups;
 
 import android.app.Activity;
 import android.content.Context;
@@ -83,7 +83,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	{ 
 		this.user = user;
 		
-		getUserActiveGroup();
+		getUserCurrentGroups();
 	}
 	
 	
@@ -146,28 +146,33 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 //		transaction.commit();
 //	}
 	
-	private void getUserActiveGroup()
+	private void getUserCurrentGroups()
 	{
-		GetUserActiveGroup asyncTask = new GetUserActiveGroup(this);
+		GetUserCurrentGroups asyncTask = new GetUserCurrentGroups(this);
 		asyncTask.execute(user.getUsername());
 	}
 	
-	public void receiveUserActiveGroupResult(StudyGroup group)
+	public void receiveUserCurrentGroupsResult(StudyGroup[] groups)
 	{
 		final String TAG = "receiveUserActiveGroupResult";
 		
-		if (group == null) {
+		if (groups == null) {
 			Log.d(TAG, "studyGroup is null. Thus, no user active group found.");
 			return;
 		}
 		
-		if (group.isAdmin(user.getUsername()))
-		{
-//			replaceInnerFragmentWithAdminGroup(group);
-		}
+//		if (group.isAdmin(user.getUsername()))
+//		{
+////			replaceInnerFragmentWithAdminGroup(group);
+//		}
 		
 		this.studyGroups = new ArrayList<StudyGroup>(); //new StudyGroup[]{group, group, group};
-		this.studyGroups.add(group);
+		
+		for (int i = 0; i < groups.length; i++){
+			this.studyGroups.add(groups[i]);
+		}
+		
+//		this.studyGroups.add(group);
 		
 		// Add to list view
 	    adapter = new MySimpleArrayAdapter(getActivity(), this.studyGroups);
