@@ -5,16 +5,15 @@ import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.oop.User;
 import com.studyonthegoapp.restfulapi.GetStudyGroupInfo;
+import com.studyonthegoapp.restfulapi.SendRequestToJoinGroup;
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -58,7 +57,6 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 		sendRequestButton.setOnClickListener(this);
 		
 		Intent intent = getIntent();
-//		profile = (Profile) intent.getExtras().getParcelable("profile");
 		user = (User) intent.getExtras().getParcelable("user");
 		group = (StudyGroup) intent.getExtras().getParcelable("studyGroup");
 		
@@ -71,9 +69,46 @@ public class StudyGroupDetailsActivity extends ActionBarActivity implements OnCl
 
 	@Override
 	public void onClick(View view) {
-		// TODO Auto-generated method stub
 		
-		Log.d("onClick()", "NEED TO IMPLEMENT");
+		sendRequestToJoinGroup();
+	}
+	
+	private void sendRequestToJoinGroup()
+	{
+		mDialog.setMessage("Sending Request...");
+		mDialog.setCancelable(false);
+		mDialog.show();
+		
+		SendRequestToJoinGroup asyncTask = new SendRequestToJoinGroup(this);
+		asyncTask.execute(Integer.toString(group.getGroupId()), user.getUsername());
+	}
+	
+	public void receiveSendRequestToJoinGroupResult(boolean insertRequestToJoinError)
+	{
+		if (insertRequestToJoinError)
+			showAlertDialog("Error", "Could not send request. Please try again.");
+		else
+			showAlertDialog("Success", "Request sent to join group.");
+		
+		mDialog.cancel();
+	}
+	
+	private void showAlertDialog(String title, String message)
+	{
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+		builder1.setTitle(title);
+        builder1.setMessage(message);
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            	
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
 	}
 	
 	private void getStudyGroupInfo()

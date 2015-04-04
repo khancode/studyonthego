@@ -123,7 +123,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		
 	}
 	
-	private  void showAlertDialog(final int result)
+	private void showAlertDialog(final int result)
 	{
 		AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
 		builder1.setTitle("Success!");
