@@ -2,15 +2,15 @@
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
     android:gravity="center_vertical" >
 
     <TextView
         android:id="@+id/groupNameTextView"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="8"
         android:gravity="center_vertical|center_horizontal"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/group_name" />
@@ -19,7 +19,7 @@
         android:id="@+id/courseTextView"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="8"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/course"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -28,9 +28,15 @@
         android:id="@+id/buildingTextView"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="7"
         android:gravity="center_vertical|center_horizontal"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/building" />
+
+    <ImageView
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_action" />
 
 </TableRow>
