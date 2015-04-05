@@ -75,14 +75,15 @@ public class StudyGroup implements Parcelable{
 		
 	}
 	
-	public StudyGroup(int groupId, String groupName, String admin, int courseId, String subject, 
+	/* For creating a new group */	
+	public StudyGroup(int groupId, String groupName, User adminUser, int courseId, String subject, 
 					  int courseNumber, String section, String description, String building,
 					  String location, String startDate, String endDate, String startTime,
 					  String endTime, int membersLimit)
 	{
 		this.groupId = groupId;
 		this.groupName = groupName;
-		this.admin = admin;
+		this.admin = adminUser.getUsername();
 		this.courseId = courseId;
 		this.subject = subject;
 		this.courseNumber = courseNumber;
@@ -96,6 +97,10 @@ public class StudyGroup implements Parcelable{
 		this.endTime = endTime;
 		this.membersCount = 1; // the group always includes the admin
 		this.membersLimit = membersLimit;
+		
+		this.members = new Members();
+		this.members.add(adminUser); // add the admin to members.
+		this.requestsToJoin = new RequestsToJoin();
 	}
 	
 	public StudyGroup(Parcel parcel)

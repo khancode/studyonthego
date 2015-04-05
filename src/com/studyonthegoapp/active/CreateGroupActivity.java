@@ -11,6 +11,7 @@ import com.studyonthegoapp.restfulapi.CreateStudyGroup;
 import com.studyonthegoapp.restfulapi.GetBuildings;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,6 +47,8 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	private EditText membersLimitET;
 	private Button createGroupButton;
 	
+	private ProgressDialog mDialog;
+	
 	private String groupName;
 	private String admin;
 	private Course course;
@@ -79,6 +82,8 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		createGroupButton = (Button) findViewById(id.createGroupbutton);
 		createGroupButton.setOnClickListener(this);
 		
+		mDialog = new ProgressDialog(this);
+		
 		Intent intent = getIntent();
 //		profile = (Profile) intent.getExtras().getParcelable("profile");
 //		admin = profile.getUsername();
@@ -106,10 +111,12 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	    	
 	    });
 	    
-	    getBuildings();
+	    
+//	    getBuildings();
 	    
 	}
 	
+	/** This api call doesn't work */
 	private void getBuildings()
 	{
 		GetBuildings asyncTask = new GetBuildings(this);
@@ -173,6 +180,10 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	
 	private void createStudyGroup()
 	{
+		mDialog.setMessage("Creating study group...");
+		mDialog.setCancelable(false);
+		mDialog.show();
+		
 		CreateStudyGroup asyncTask = new CreateStudyGroup(this);
 		asyncTask.execute(admin, groupName, Integer.toString(course.getId()), description, building,
 						  location, startDate, endDate, startTime, endTime, Integer.toString(membersLimit));
@@ -197,12 +208,14 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		}
 		else if (groupNameExists == false && insertStudyGroupError == false && insertMemberError == false)
 		{
-			StudyGroup group = new StudyGroup(groupId, groupName, admin, course.getId(), 
+			StudyGroup group = new StudyGroup(groupId, groupName, user, course.getId(), 
 											  course.getSubject(), course.getNumber(), course.getSection(),
 											  description, building, location, startDate, endDate,
 											  startTime, endTime, membersLimit);
 			showAlertDialog(group);
 		}
+		
+		mDialog.cancel();
 	}
 	
 	private void showAlertDialog(final StudyGroup group)

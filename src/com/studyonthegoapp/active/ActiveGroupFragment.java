@@ -113,7 +113,9 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 //		        }
 		        
 		        StudyGroup group = (StudyGroup) data.getExtras().getParcelable("studyGroup");
-//		        Log.d("onActivityResult", "group: " + group.toString());
+		        
+		        this.studyGroups.add(group);
+		        adapter.notifyDataSetChanged();
 		        
 //		        replaceInnerFragmentWithAdminGroup(group);
 		    }

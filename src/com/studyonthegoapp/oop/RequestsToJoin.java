@@ -14,6 +14,11 @@ public class RequestsToJoin implements Parcelable {
 	
 	private ArrayList<User> requests;
 	
+	public RequestsToJoin()
+	{
+		this.requests = new ArrayList<User>();
+	}
+	
 	public RequestsToJoin(JSONArray jArray)
 	{
 		requests = new ArrayList<User>();

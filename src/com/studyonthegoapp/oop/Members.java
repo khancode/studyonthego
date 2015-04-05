@@ -42,6 +42,11 @@ public class Members implements Parcelable {
 		this.members = parcel.createTypedArrayList(User.CREATOR);
 	}
 	
+	public void add(User user)
+	{
+		this.members.add(user);
+	}
+	
 	public int length()	{ return this.members.size(); }
 	
 	public ArrayList<User> getUsers() { return this.members; }
