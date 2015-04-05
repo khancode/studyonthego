@@ -1,11 +1,15 @@
 package com.studyonthegoapp.activity;
 
+import java.util.ArrayList;
+
 import com.studyonthegoapp.active.ActiveGroupFragment;
 import com.studyonthegoapp.codebase.R;
+import com.studyonthegoapp.oop.Buildings;
 import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.User;
 import com.studyonthegoapp.profile.ProfileFragment;
+import com.studyonthegoapp.restfulapi.GetBuildings;
 import com.studyonthegoapp.search.SearchStudyGroupsFragment;
 
 import android.support.v4.app.Fragment;
@@ -103,6 +107,24 @@ public class AppCoreActivity extends ActionBarActivity {
 	    activeGroupFragment.setUserFromAppCoreActivity(user);
 	    searchStudyGroupsFragment.setUserFromAppCoreActivity(user);
 	    profileFragment.setProfileFromAppCoreActivity(profile);
+	    
+	    // to get all Georgia Tech Buildings
+	    getBuildings();
+	}
+	
+	private void getBuildings()
+	{
+		GetBuildings asyncTask = new GetBuildings(this);
+		asyncTask.execute();
+	}
+	
+	public void receiveGetBuildingsResult(ArrayList<String> buildings_result, int responseCode)
+	{
+		//buildings.addAll(buildings_result);
+		Buildings build = new Buildings(buildings_result); 
+		System.out.println(Buildings.getBuildings());
+		//showAlertDialog(responseCode);
+		
 	}
 
 	@Override

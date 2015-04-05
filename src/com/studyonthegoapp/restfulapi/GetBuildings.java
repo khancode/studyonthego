@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.studyonthegoapp.active.CreateGroupActivity;
+import com.studyonthegoapp.activity.AppCoreActivity;
 import com.studyonthegoapp.oop.StudyGroup;
 
 import android.os.AsyncTask;
@@ -21,15 +22,15 @@ public class GetBuildings extends AsyncTask <String, Void, Void>
 
 {
 
-	private CreateGroupActivity createGroupInstance;
+	private AppCoreActivity appCoreActivityInstance;
 	
 	private int responseCode;
 	
 	private ArrayList<String> buildings = new ArrayList<String>();
 	
-	public GetBuildings(CreateGroupActivity createGroupActivity)
+	public GetBuildings(AppCoreActivity appCoreActivity)
 	{
-		createGroupInstance = createGroupActivity;
+		appCoreActivityInstance = appCoreActivity;
 	}
 
 	@Override
@@ -103,6 +104,6 @@ public class GetBuildings extends AsyncTask <String, Void, Void>
 	protected void onPostExecute(Void v)
 	{
 		// Return the results to Messaging activity
-		createGroupInstance.receiveGetBuildingsResult(buildings, responseCode);	}
+		appCoreActivityInstance.receiveGetBuildingsResult(buildings, responseCode);	}
 	
 }
