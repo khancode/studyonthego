@@ -54,14 +54,37 @@
         </activity>
         <activity
             android:name="com.studyonthegoapp.active.ActiveGroupDetailsActivity"
-			android:configChanges="orientation|screenSize"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_active_group_details"
+            android:launchMode="singleTop"
             android:parentActivityName="com.studyonthegoapp.activity.AppCoreActivity" >
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.studyonthegoapp.activity.AppCoreActivity" /> >
+                android:value="com.studyonthegoapp.activity.AppCoreActivity" />
+        </activity>
+        <activity
+            android:name="com.studyonthegoapp.active.RequestToJoinActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_request_to_join"
+            android:parentActivityName="com.studyonthegoapp.active.ActiveGroupDetailsActivity" >
+            
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.studyonthegoapp.active.ActiveGroupDetailsActivity" />
+        </activity>
+        <activity
+            android:name=".MemberActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_member"
+            android:parentActivityName="com.studyonthegoapp.active.ActiveGroupDetailsActivity" >
+            
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.studyonthegoapp.active.ActiveGroupDetailsActivity" />
         </activity>
     </application>
 

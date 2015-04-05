@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.studyonthegoapp.codebase.MemberActivity;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.codebase.R.layout;
@@ -25,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.EditText;
@@ -42,8 +44,6 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 	private EditText endDateET;
 	private EditText startTimeET;
 	private EditText endTimeET;
-//	private EditText membersCountET;
-//	private EditText membersLimitET;
 	
 	private StudyGroup group;
 	
@@ -84,8 +84,6 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 		endDateET = (EditText) findViewById(id.endDateEditText);
 		startTimeET = (EditText) findViewById(id.startTimeEditText);
 		endTimeET = (EditText) findViewById(id.endTimeEditText);
-//		membersCountET = (EditText) findViewById(id.membersCountEditText);
-//		membersLimitET = (EditText) findViewById(id.membersLimitEditText);
 		
 		groupNameTV.setText(group.getGroupName());
 		courseTV.setText(group.getSubject() + " " + group.getCourseNumber());
@@ -96,8 +94,6 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 		endDateET.setText(group.getEndDate());
 		startTimeET.setText(group.getStartTime());
 		endTimeET.setText(group.getEndTime());
-//		membersCountET.setText(Integer.toString(group.getMembersCount()));
-//		membersLimitET.setText(Integer.toString(group.getMembersLimit()));
 		
 		// get the listview
 		requestsExpandableListView = (ExpandableListView) findViewById(id.requestsExpandableListView);
@@ -111,17 +107,15 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
         requestsExpandableListView.setAdapter(listAdapter);
         
         listAdapter.notifyDataSetChanged();
-        
-//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
 	}
 	
 	private void prepareListData()
 	{
 		listDataHeader = new ArrayList<String>();
-		final String header = "Requests To Join";
+		final String header = "Requests To Join (" + group.getRequestsToJoin().length() + ")";
 		listDataHeader.add(header);
 		
-		final String membersHeader = "Members";
+		final String membersHeader = "Members (" + group.getMembersCount() + "/" + group.getMembersLimit() + ")";
 		listDataHeader.add(membersHeader);
 		
 		listDataChild = new HashMap<String, List<User>>();
@@ -168,6 +162,25 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 	                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	            convertView = infalInflater.inflate(R.layout.list_item_requests_to_join, null);
 	        }
+	        
+	        // Set onClickListener
+	        final Intent intent;
+	        if (groupPosition == 0) // Requests To Join
+	        	intent = new Intent(_context, RequestToJoinActivity.class);
+	        else if (groupPosition == 1) // Members
+	        	intent = new Intent(_context, MemberActivity.class);
+	        else
+	        	intent = null; // should not happen;	        
+	        
+	        convertView.setOnClickListener(new OnClickListener(){
+	        	
+				@Override
+				public void onClick(View arg0) {
+					intent.putExtra("studyGroup", group);
+					intent.putExtra("user", user);
+					startActivity(intent);
+				}		        	
+	        });
 	 
 	        TextView usernameTextView = (TextView) convertView
 	                .findViewById(R.id.usernameTextView);

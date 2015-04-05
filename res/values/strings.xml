@@ -55,17 +55,24 @@
     <string name="group_name"><b><u>Group Name</u></b></string>
     <string name="course"><b><u>Course</u></b></string>
     <string name="building"><b><u>Building</u></b></string>
-    
-    <!-- activity_active_group_details.xml -->
+
+    <!-- activity_active_group_details.xml & fragment_profile.xml -->
     <string name="title_activity_active_group_details">My Study Group</string>
-    <string name="login_label">Username:</string>
-    <string name="first_name_label">First Name:</string>
-    <string name="skills_label">Skills:</string>
-    <string name="year_label">Year:</string>
-    <string name="major_label">Major:</string>
+    <string name="username_bold_label"><b>Username:</b></string>
+    <string name="first_name_label"><b>First Name:</b></string>
+    <string name="skills_label"><b>Skills:</b></string>
+    <string name="year_label"><b>Year:</b></string>
+    <string name="major_label"><b>Major:</b></string>
     <string name="specialization_label">Specialization:</string>
-    <string name="last_name_label">Last Name:</string>
+    <string name="last_name_label"><b>Last Name:</b></string>
     <string name="save_profile_button_label">Save</string>
-    <string name="courses_label">Courses:</string>
+    <string name="courses_label"><b>Courses:</b></string>
+    
+    <!-- activity_request_to_join.xml -->
+    <string name="title_activity_request_to_join">Request</string>
+    <string name="respond_to_request">Respond To Request</string>
+    
+    <!-- activity_member.xml -->
+    <string name="title_activity_member">Member</string>
 
 </resources>

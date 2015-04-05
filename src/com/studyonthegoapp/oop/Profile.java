@@ -69,6 +69,9 @@ public class Profile implements Parcelable {
 	public String getLastName() { return this.lastName; }
 	public String getFirstLastName() { return this.firstName + " " + this.lastName; }
 	public Course[] getCourses() { return this.courses; }
+	public String getMajor() { return this.major; }
+	public String getYear() { return this.year; }
+	public String getSkills() { return this.skills; }
 	
 	@Override
 	public String toString()
