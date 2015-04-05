@@ -75,10 +75,10 @@ public class RequestToJoinActivity extends ActionBarActivity implements OnClickL
 		// TODO Auto-generated method stub
 		Log.d("OnClick", "NEED TO IMPLEMENT");
 		
-		showAlertDialog();
+		showAlertDialogForRespondToRequestButton();
 	}
 	
-	private void showAlertDialog()
+	private void showAlertDialogForRespondToRequestButton()
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Respond to Request");
@@ -126,27 +126,86 @@ public class RequestToJoinActivity extends ActionBarActivity implements OnClickL
 		if (acceptRequest.equals("yes"))
 		{
 			if (!deleteRequestToJoinError && !insertMemberError && !updateStudyGroupError)
+			{
 				Log.d(TAG, "Success: accepted request");
+				
+				showAlertDialogForAPIResult(false, acceptRequest);
+			}
 			else
 			{
 				Log.d(TAG, "Error: couldn't accept request" +
 						   "\ndeleteRequestToJoinError: " + deleteRequestToJoinError + 
 						   "\ninsertMemberError: " + insertMemberError +
 						   "\nupdateStudyGroupError: " + updateStudyGroupError);
+				
+				showAlertDialogForAPIResult(true, acceptRequest);
 			}
+			
 		}
 		else if (acceptRequest.equals("no"))
 		{
 			if (!deleteRequestToJoinError)
+			{
 				Log.d(TAG, "Success: declined request");
+				
+				showAlertDialogForAPIResult(false, acceptRequest);
+			}
 			else
+			{
 				Log.d(TAG, "Error: couldn't delete request from MySQL table" +
 						   "\ndeleteRequestToJoinError: " + deleteRequestToJoinError);
+			
+				showAlertDialogForAPIResult(true, acceptRequest);
+			}
 		}
 		else
 			Log.d(TAG, "ERROR: this should not happen! acceptRequest has to be either 'yes' or 'no'");
 		
 		
 		mDialog.cancel();
+	}
+	
+	private void showAlertDialogForAPIResult(final boolean error, final String acceptRequest)
+	{
+		String title;
+		String message;
+		if (error)
+		{
+			title = "Error";
+			message = "Couldn't respond to request. Please try again.";
+		}
+		else
+		{
+			title = "Success";
+			if (acceptRequest.equals("yes"))
+				message = "Accepted " + user.getUsername() + "'s request.";
+			else
+				message = "Declined " + user.getUsername() + "'s request.";
+		}
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(true);
+        builder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int id) {
+		            	
+		            	if (error == false)
+		            	{
+		            		Intent data = new Intent();
+		                	data.putExtra("user", user);
+		                	data.putExtra("acceptRequest", acceptRequest);
+		                	// Activity finished ok, return the data
+		                	setResult(RESULT_OK, data);
+		                	finish();
+		            	}
+		            	
+		                dialog.cancel();
+		            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
 	}
 }

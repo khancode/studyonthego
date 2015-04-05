@@ -151,6 +151,12 @@ public class StudyGroup implements Parcelable{
 	public ArrayList<User> getMemberUsers() { return this.members.getUsers(); }
 	public RequestsToJoin getRequestsToJoin() { return this.requestsToJoin; }
 	
+	public void addMember(User user) 
+	{
+		this.members.add(user);
+		this.membersCount++;
+	}
+	
 	@Override
 	public String toString()
 	{

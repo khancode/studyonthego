@@ -48,8 +48,15 @@ public class RequestsToJoin implements Parcelable {
 	}
 	
 	public void removeRequest(User user)
-	{
-		requests.remove(user);
+	{		
+		for (int i = 0; i < this.requests.size(); i++)
+		{
+			if (this.requests.get(i).getUsername().equals(user.getUsername()))
+			{
+				this.requests.remove(i);
+				break;
+			}
+		}
 	}
 	
 	public int length() { return this.requests.size(); }

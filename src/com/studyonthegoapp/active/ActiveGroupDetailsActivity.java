@@ -35,6 +35,8 @@ import android.widget.TextView;
 
 public class ActiveGroupDetailsActivity extends ActionBarActivity {
 
+	public static final int REQUEST_CODE = 1;
+	
 	private TextView groupNameTV;
 	private TextView courseTV;
 	private TextView descriptionTV;
@@ -99,27 +101,54 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 		requestsExpandableListView = (ExpandableListView) findViewById(id.requestsExpandableListView);
 		
         // preparing list data
+		listDataHeader = new ArrayList<String>();
+		listDataChild = new HashMap<String, List<User>>();
         prepareListData();
  
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
- 
         // setting list adapter
         requestsExpandableListView.setAdapter(listAdapter);
         
         listAdapter.notifyDataSetChanged();
 	}
 	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		if (requestCode == REQUEST_CODE)
+		{			
+		    if (resultCode == RESULT_OK) {
+//		        if (data.hasExtra("myData1")) {
+//		            Toast.makeText(getActivity(), data.getExtras().getString("myData1"),
+//		                Toast.LENGTH_SHORT).show();
+//		        }
+		        
+		        User user = (User) data.getExtras().getParcelable("user");
+		        String acceptRequest = data.getExtras().getString("acceptRequest");
+		        
+		        group.getRequestsToJoin().removeRequest(user);
+		        
+		        if (acceptRequest.equals("yes"))
+		        	group.addMember(user);
+		        
+		        prepareListData();
+	        	listAdapter.notifyDataSetChanged();
+		    }
+		}
+	}
+	
+	
 	private void prepareListData()
 	{
-		listDataHeader = new ArrayList<String>();
-		final String header = "Requests To Join (" + group.getRequestsToJoin().length() + ")";
-		listDataHeader.add(header);
+		listDataHeader.clear();
+		final String requestsHeader = "Requests To Join (" + group.getRequestsToJoin().length() + ")";
+		listDataHeader.add(requestsHeader);
 		
 		final String membersHeader = "Members (" + group.getMembersCount() + "/" + group.getMembersLimit() + ")";
 		listDataHeader.add(membersHeader);
 		
-		listDataChild = new HashMap<String, List<User>>();
-		listDataChild.put(header, group.getRequestsToJoin().getRequests());
+		listDataChild.clear();
+		listDataChild.put(requestsHeader, group.getRequestsToJoin().getRequests());
 		
 		listDataChild.put(membersHeader, group.getMemberUsers());
 	}
@@ -155,8 +184,6 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 	 
 	        final User user = (User) getChild(groupPosition, childPosition);
 	        
-	        Log.d("dat feel", "user: " + user);
-	 
 	        if (convertView == null) {
 	            LayoutInflater infalInflater = (LayoutInflater) this._context
 	                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -178,7 +205,7 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 				public void onClick(View arg0) {
 					intent.putExtra("studyGroup", group);
 					intent.putExtra("user", user);
-					startActivity(intent);
+					startActivityForResult(intent, REQUEST_CODE);
 				}		        	
 	        });
 	 
