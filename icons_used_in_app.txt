@@ -1,0 +1,13 @@
+Icons used in app:
+
+- right arrow
+http://www.icons4android.com/icon/1855
+
+- magnifying glass
+http://www.icons4android.com/icon/1917
+
+- group
+http://www.icons4android.com/icon/1791
+
+- person
+http://www.icons4android.com/icon/1966

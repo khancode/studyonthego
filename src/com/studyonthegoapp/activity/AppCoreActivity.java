@@ -16,6 +16,7 @@ import com.studyonthegoapp.slidingtabs.SlidingTabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
@@ -198,7 +199,7 @@ public class AppCoreActivity extends ActionBarActivity {
         public CharSequence getPageTitle(int position) {
 //            return "Item " + (position + 1);
         	
-        	Drawable image = getResources().getDrawable(imageResId[position]);
+        	Drawable image = ResourcesCompat.getDrawable(getResources(), imageResId[position], null);
             image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
             SpannableString sb = new SpannableString(" ");
             ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
