@@ -18,7 +18,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -69,6 +73,8 @@ public class AppCoreActivity extends ActionBarActivity {
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setCustomTabView(R.layout.custom_tab, 0);
+        mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
         // END_INCLUDE (setup_slidingtablayout)
         
@@ -181,9 +187,23 @@ public class AppCoreActivity extends ActionBarActivity {
          * Here we construct one using the position value, but for real application the title should
          * refer to the item's contents.
          */
+        
+        private int[] imageResId = {
+                R.drawable.ic_group,
+                R.drawable.ic_magnify_glass,
+                R.drawable.ic_person
+        };
+        
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Item " + (position + 1);
+//            return "Item " + (position + 1);
+        	
+        	Drawable image = getResources().getDrawable(imageResId[position]);
+            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+            SpannableString sb = new SpannableString(" ");
+            ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
+            sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return sb;
         }
         // END_INCLUDE (pageradapter_getpagetitle)
 		
