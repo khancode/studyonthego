@@ -60,18 +60,15 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/building_label" />
 
-        <Spinner
-            android:id="@+id/BuildingSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/buildingEditText"
-            android:layout_width="0dip"
+        <AutoCompleteTextView
+            android:id="@+id/buildingAutoText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text" />
+            android:ems="10" >
+
+            <requestFocus />
+        </AutoCompleteTextView>
 
     </TableRow>
     

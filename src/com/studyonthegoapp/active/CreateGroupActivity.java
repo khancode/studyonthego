@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
+import com.studyonthegoapp.oop.Buildings;
 import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.oop.User;
@@ -27,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -39,6 +41,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	private Spinner courseSpinner;
 	private EditText descriptionET;
 	private EditText buildingET;
+	private AutoCompleteTextView buildingAT;
 	private EditText locationET;
 	private EditText startDateET;
 	private EditText endDateET;
@@ -64,6 +67,8 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 //	private Profile profile;
 	private User user;
 	
+	private ArrayList<String> buildings= new ArrayList<String>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,7 +77,8 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 		groupNameET = (EditText) findViewById(id.groupNameEditText);
 		courseSpinner = (Spinner) findViewById(id.courseSpinner);
 		descriptionET = (EditText) findViewById(id.descriptionEditText);
-		buildingET = (EditText) findViewById(id.buildingEditText);
+		//buildingET = (EditText) findViewById(id.buildingEditText);
+		buildingAT = (AutoCompleteTextView) findViewById(R.id.buildingAutoText);
 		locationET = (EditText) findViewById(id.locationEditText);
 		startDateET = (EditText) findViewById(id.startDateEditText);
 		endDateET = (EditText) findViewById(id.endDateEditText);
@@ -112,23 +118,29 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	    });
 	    
 	    
-//	    getBuildings();
+	    //getBuildings();
+	    ArrayAdapter<String> buildingAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, Buildings.getBuildings());
+        
+	    buildingAT.setThreshold(3);
+        buildingAT.setAdapter(buildingAdapter);
 	    
 	}
 	
 	/** This api call doesn't work */
-	private void getBuildings()
+	/*private void getBuildings()
 	{
 		GetBuildings asyncTask = new GetBuildings(this);
 		asyncTask.execute();
 	}
 	
-	public void receiveGetBuildingsResult(ArrayList<String> buildings, int responseCode)
+	public void receiveGetBuildingsResult(ArrayList<String> buildings_result, int responseCode)
 	{
+		buildings.addAll(buildings_result);
 		System.out.println(buildings);
 		//showAlertDialog(responseCode);
 		
-	}
+	}*/
 	
 	private void showAlertDialog(final int result)
 	{

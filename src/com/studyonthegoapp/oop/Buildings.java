@@ -4,20 +4,21 @@ import java.util.ArrayList;
 
 public class Buildings {
 
-	private ArrayList<String> buildings;
+	private static ArrayList<String> buildings;
 	
 	public Buildings()
 	{
-		this.buildings = new ArrayList<String>();
+		buildings = new ArrayList<String>();
 	}
 	
-	/*public Buildings()
+	public Buildings(ArrayList<String> buildings_inp)
 	{
-
-	}*/
+		buildings = new ArrayList<String>();
+		buildings.addAll(buildings_inp);
+	}
 	
-	public int length()	{ return this.buildings.size(); }
+	public int length()	{ return buildings.size(); }
 	
-	public ArrayList<String> getBuildings() { return this.buildings; }
+	public static ArrayList<String> getBuildings() { return buildings; }
 	
 }
