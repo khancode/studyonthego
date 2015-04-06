@@ -67,12 +67,13 @@
     <string name="last_name_label"><b>Last Name:</b></string>
     <string name="save_profile_button_label">Save</string>
     <string name="courses_label"><b>Courses:</b></string>
-    
+
     <!-- activity_request_to_join.xml -->
     <string name="title_activity_request_to_join">Request</string>
     <string name="respond_to_request">Respond To Request</string>
-    
+
     <!-- activity_member.xml -->
     <string name="title_activity_member">Member</string>
+    <string name="title_activity_sliding_tabs">SlidingTabsActivity</string>
 
 </resources>

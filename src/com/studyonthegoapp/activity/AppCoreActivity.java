@@ -7,18 +7,14 @@ import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.User;
 import com.studyonthegoapp.profile.ProfileFragment;
 import com.studyonthegoapp.search.SearchStudyGroupsFragment;
+import com.studyonthegoapp.slidingtabs.SlidingTabLayout;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -26,69 +22,54 @@ import android.view.MenuItem;
 
 public class AppCoreActivity extends ActionBarActivity {
 
-	private String username;
-	private Profile profile;
-	private User user;
-	
-	private static ViewPager viewPager;
-	private ActionBar actionBar;
-	
-	private ActiveGroupFragment activeGroupFragment;
+	/**
+     * A custom {@link ViewPager} title strip which looks much like Tabs present in Android v4.0 and
+     * above, but is designed to give continuous feedback to the user when scrolling.
+     */
+    private SlidingTabLayout mSlidingTabLayout;
+
+    /**
+     * A {@link ViewPager} which will be used in conjunction with the {@link SlidingTabLayout} above.
+     */
+    private ViewPager mViewPager;
+    
+    private ActiveGroupFragment activeGroupFragment;
 	private SearchStudyGroupsFragment searchStudyGroupsFragment;
 	private ProfileFragment profileFragment;
-		
+	
+	private Profile profile;
+	private User user;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_app_core);
-				
+		
 		// Get username that was passed into intent from MainActivity
 		Intent intent = getIntent();
-		username = intent.getStringExtra("username");
-
-	    // setup action bar for tabs
-	    actionBar = getSupportActionBar();
-	    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	    actionBar.setDisplayShowTitleEnabled(true);
-			    
-	    // Create the Fragments
+		String username = intent.getStringExtra("username");
+		
+		// Create the Fragments
 	    activeGroupFragment = new ActiveGroupFragment();
 	    searchStudyGroupsFragment = new SearchStudyGroupsFragment();
 	    profileFragment = new ProfileFragment();
-			    
-	    // ViewPager
-	    viewPager = (ViewPager) findViewById(R.id.pager);
-	    viewPager.setAdapter(new TabsPagerAdapter(getSupportFragmentManager(), activeGroupFragment, searchStudyGroupsFragment, profileFragment));
-	    viewPager.setOffscreenPageLimit(2); 
-	    viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+		
+		// BEGIN_INCLUDE (setup_viewpager)
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setAdapter(new SamplePagerAdapter(getSupportFragmentManager(), activeGroupFragment, searchStudyGroupsFragment, profileFragment));
+        mViewPager.setOffscreenPageLimit(3);
+        // END_INCLUDE (setup_viewpager)
 
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onPageSelected(int position) {
-				// TODO Auto-generated method stub
-				actionBar.setSelectedNavigationItem(position);
-			}
-	    	
-	    });
-
-	    actionBar.addTab(actionBar.newTab().setText("Active").setTabListener(new TabListener<ActiveGroupFragment>(activeGroupFragment)));
-	    actionBar.addTab(actionBar.newTab().setText("Search").setTabListener(new TabListener<SearchStudyGroupsFragment>(searchStudyGroupsFragment)));
-	    actionBar.addTab(actionBar.newTab().setText("Profile").setTabListener(new TabListener<SearchStudyGroupsFragment>(profileFragment)));
-	    
-//	    actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#0099CC")));
-	    
-	    // TODO Get courses from either T-Square API or MySQL
+        // BEGIN_INCLUDE (setup_slidingtablayout)
+        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
+        // it's PagerAdapter set.
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setViewPager(mViewPager);
+        // END_INCLUDE (setup_slidingtablayout)
+        
+        
+        // TODO Get courses from either T-Square API or MySQL
 	    // dummy courses data for now
 	    Course[] courses = { new Course(1, "CS", 3451, "A"),
 	    					 new Course(4, "CS", 3600, "A"),
@@ -124,16 +105,19 @@ public class AppCoreActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public ActiveGroupFragment getActiveGroupFragment() { return this.activeGroupFragment; }
-	public SearchStudyGroupsFragment getSearchStudyGroupsFragment() { return this.searchStudyGroupsFragment; }
-	
-	public static class TabsPagerAdapter extends FragmentPagerAdapter
-	{
-		ActiveGroupFragment active_frag;
+	/**
+     * The {@link android.support.v4.view.PagerAdapter} used to display pages in this sample.
+     * The individual pages are simple and just display two lines of text. The important section of
+     * this class is the {@link #getPageTitle(int)} method which controls what is displayed in the
+     * {@link SlidingTabLayout}.
+     */
+    class SamplePagerAdapter extends FragmentPagerAdapter {
+
+    	ActiveGroupFragment active_frag;
 		SearchStudyGroupsFragment search_frag;
 		ProfileFragment profile_frag;
 
-		public TabsPagerAdapter(FragmentManager fm, ActiveGroupFragment active_frag, SearchStudyGroupsFragment search_frag,
+		public SamplePagerAdapter(FragmentManager fm, ActiveGroupFragment active_frag, SearchStudyGroupsFragment search_frag,
 								ProfileFragment profile_frag)
 		{
 			super(fm);
@@ -159,53 +143,27 @@ public class AppCoreActivity extends ActionBarActivity {
 			}
 		}
 
-		@Override
-		public int getCount() {
-			// TODO Auto-generated method stub
-			return 3;
-		}
+		/**
+         * @return the number of pages to display
+         */
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        // BEGIN_INCLUDE (pageradapter_getpagetitle)
+        /**
+         * Return the title of the item at {@code position}. This is important as what this method
+         * returns is what is displayed in the {@link SlidingTabLayout}.
+         * <p>
+         * Here we construct one using the position value, but for real application the title should
+         * refer to the item's contents.
+         */
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Item " + (position + 1);
+        }
+        // END_INCLUDE (pageradapter_getpagetitle)
 		
-	}
-	
-	public static class TabListener<T extends Fragment> implements ActionBar.TabListener
-	{
-	    private Fragment mFragment;
-//	    private final ActionBarActivity mActivity;
-//	    private final String mTag;
-//	    private final Class<T> mClass;
-
-	    /** Constructor used each time a new tab is created.
-	      * @param activity  The host Activity, used to instantiate the fragment
-	      * @param tag  The identifier tag for the fragment
-	      * @param clz  The fragment's Class, used to instantiate the fragment
-	      */
-	    public TabListener(Fragment fragment) {
-//	        mActivity = activity;
-//	        mTag = tag;
-//	        mClass = clz;
-	    	
-	    	mFragment = fragment;
-	    }
-
-	    /* The following are each of the ActionBar.TabListener callbacks */
-
-	    public void onTabSelected(Tab tab, FragmentTransaction ft) {
-	        viewPager.setCurrentItem(tab.getPosition());
-	        
-//	        Log.v("onTabSelected", "called!");
-	        
-//	        if (mFragment instanceof FriendsFragment)
-//	        	((FriendsFragment) mFragment).getFriendRequestsAndFriends();
-//	        else if (mFragment instanceof MessagingFragment)
-//	        	((MessagingFragment) mFragment).getFriends();
-	    }
-
-	    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-	        
-	    }
-
-	    public void onTabReselected(Tab tab, FragmentTransaction ft) {
-	        // User selected the already selected tab. Usually do nothing.
-	    }
-	}
+    }
 }

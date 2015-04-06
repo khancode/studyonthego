@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.studyonthegoapp.codebase.MemberActivity;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
-import com.studyonthegoapp.codebase.R.layout;
-import com.studyonthegoapp.codebase.R.menu;
 import com.studyonthegoapp.oop.Members;
 import com.studyonthegoapp.oop.RequestsToJoin;
 import com.studyonthegoapp.oop.StudyGroup;
@@ -17,13 +14,11 @@ import com.studyonthegoapp.oop.User;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +29,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 public class ActiveGroupDetailsActivity extends ActionBarActivity {
-
+	
 	public static final int REQUEST_CODE = 1;
 	
 	private TextView groupNameTV;
@@ -48,6 +43,7 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 	private EditText endTimeET;
 	
 	private StudyGroup group;
+	private boolean groupUpdated;
 	
 	private ExpandableListView requestsExpandableListView;
 	private ExpandableListAdapter listAdapter;
@@ -61,6 +57,8 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 		
 		Intent intent = getIntent();
 		group = intent.getParcelableExtra("studyGroup");
+		
+		groupUpdated = false;
 		
 		final String TAG = "AdminGroupInnerFragment";
 		
@@ -133,6 +131,8 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 		        
 		        prepareListData();
 	        	listAdapter.notifyDataSetChanged();
+	        	
+	        	groupUpdated = true;
 		    }
 		}
 	}
@@ -274,5 +274,39 @@ public class ActiveGroupDetailsActivity extends ActionBarActivity {
 			return false;
 		}
 		
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+	        //set result and finish()
+	    	sendDataBackToParentFragment();
+	    	return true;
+	    } else { 
+	        return super.onKeyDown(keyCode, event);
+	    }
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{    
+	   switch (item.getItemId()) 
+	   {        
+	      case android.R.id.home:            
+	         sendDataBackToParentFragment();    
+	         return true;        
+	      default:            
+	         return super.onOptionsItemSelected(item);    
+	   }
+	}
+	
+	private void sendDataBackToParentFragment() {
+		Intent data = new Intent();
+		data.putExtra("groupUpdated", groupUpdated);
+		data.putExtra("studyGroup", group);
+    	// Activity finished ok, return the data
+    	setResult(RESULT_OK, data);
+    	finish();
 	}
 }

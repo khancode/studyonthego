@@ -69,22 +69,26 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_request_to_join"
             android:parentActivityName="com.studyonthegoapp.active.ActiveGroupDetailsActivity" >
-            
+
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.studyonthegoapp.active.ActiveGroupDetailsActivity" />
         </activity>
         <activity
-            android:name=".MemberActivity"
+            android:name="com.studyonthegoapp.active.MemberActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_member"
             android:parentActivityName="com.studyonthegoapp.active.ActiveGroupDetailsActivity" >
-            
+
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.studyonthegoapp.active.ActiveGroupDetailsActivity" />
+        </activity>
+        <activity
+            android:name="com.studyonthegoapp.zzz.TabsActivity"
+            android:label="@string/title_activity_sliding_tabs" >
         </activity>
     </application>
 

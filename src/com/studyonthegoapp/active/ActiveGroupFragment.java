@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +28,13 @@ import android.widget.TextView;
 
 public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	
-	public static final int REQUEST_CODE = 1;
+	public static final int CREATE_GROUP_REQUEST_CODE = 1;
+	public static final int ACTIVE_GROUP_REQUEST_CODE = 2;
 	
 	private Button actionButton;
 	
 	private FragmentManager manager;
 	
-//	private Profile profile;
 	private User user;
 	
 	private ListView listView;
@@ -72,10 +71,9 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	
 	private void viewActiveStudyGroupDetails(StudyGroup group)
 	{
-		System.out.println("NEED TO IMPLEMENT THIS");
 		Intent intent = new Intent(getActivity(), ActiveGroupDetailsActivity.class);
 		intent.putExtra("studyGroup", group);
-		startActivity(intent);
+		startActivityForResult(intent, ACTIVE_GROUP_REQUEST_CODE);
 	}
 	
 	/** Immediately called after being instantiated (because of dummy data) */
@@ -92,7 +90,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 				
 		Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
 		intent.putExtra("user", user);
-		startActivityForResult(intent, REQUEST_CODE);
+		startActivityForResult(intent, CREATE_GROUP_REQUEST_CODE);
 			
 	}
 	
@@ -104,7 +102,7 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 //		Log.d("shouldbe", "REQUEST_CODE: " + REQUEST_CODE +
 //						  "RESULT_CODE: " + getActivity().RESULT_OK);
 		
-		if (requestCode == REQUEST_CODE)
+		if (requestCode == CREATE_GROUP_REQUEST_CODE)
 		{			
 		    if (resultCode == Activity.RESULT_OK) {
 //		        if (data.hasExtra("myData1")) {
@@ -119,6 +117,30 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 		        
 //		        replaceInnerFragmentWithAdminGroup(group);
 		    }
+		}
+		else if (requestCode == ACTIVE_GROUP_REQUEST_CODE)
+		{
+			if (resultCode == Activity.RESULT_OK)
+			{
+				boolean groupUpdated = data.getExtras().getBoolean("groupUpdated");
+				if (groupUpdated)
+				{
+					StudyGroup group = (StudyGroup) data.getExtras().getParcelable("studyGroup");
+					
+					for (int i = 0; i < studyGroups.size(); i++)
+					{
+						if (studyGroups.get(i).getGroupId() == group.getGroupId())
+						{
+							studyGroups.set(i, group);
+							break;
+						}
+					}
+				
+					adapter.notifyDataSetChanged();
+				}
+				
+//				Log.d("onActivityResult", "groupUpdated: " + groupUpdated);
+			}
 		}
 	}
 	

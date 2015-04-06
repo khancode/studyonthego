@@ -1,4 +1,7 @@
-package com.studyonthegoapp.codebase;
+package com.studyonthegoapp.active;
+
+import com.studyonthegoapp.codebase.R;
+import com.studyonthegoapp.codebase.R.layout;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
