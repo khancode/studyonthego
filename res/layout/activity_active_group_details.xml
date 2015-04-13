@@ -192,12 +192,13 @@
         <ExpandableListView
             android:id="@+id/requestsExpandableListView"
             android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="1"
-		    android:choiceMode="singleChoice"
-		    android:divider="#A4C739"
-		    android:childDivider="#0000FF"
-		    android:dividerHeight="0.5dp" >
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:childDivider="#0000FF"
+            android:choiceMode="singleChoice"
+            android:divider="#A4C739"
+            android:dividerHeight="0.5dp" >
+
         </ExpandableListView>
                 
     </TableRow>
