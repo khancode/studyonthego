@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.studyonthegoapp.active.MemberActivity;
 import com.studyonthegoapp.active.RequestToJoinActivity;
-//import com.studyonthegoapp.active.ActiveGroupDetailsActivity.ExpandableListAdapter;
 import com.studyonthegoapp.codebase.R;
 import com.studyonthegoapp.codebase.R.id;
 import com.studyonthegoapp.oop.Course;
@@ -60,6 +59,8 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	private List<String> listDataHeader;
 	private HashMap<String, Course[]> listDataChild;
 	
+	private String[] years_list = {"Freshman","Sophomore","Junior","Senior","Master","PhD"};
+	private String year;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -95,9 +96,10 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		userNameET.setText(profile.getUsername());
 		firstNameET.setText(profile.getFirstName());
 		lastNameET.setText(profile.getLastName());
-		// get the listview
+		majorET.setText(profile.getMajor());
+		skillsET.setText(profile.getSkills());
 		
-        // preparing list data
+        // preparing list data for courses
 		listDataHeader = new ArrayList<String>();
 		listDataChild = new HashMap<String, Course[]>();
         prepareListData();
@@ -107,6 +109,28 @@ public class ProfileFragment extends Fragment implements OnClickListener {
         coursesExpandableListView.setAdapter(listAdapter);
         
         listAdapter.notifyDataSetChanged();
+        
+        //preparing spinner data for years
+        
+        MySimpleArrayAdapter dAdapter = new MySimpleArrayAdapter(this.getActivity(), years_list);
+	    yearSpinner.setAdapter(dAdapter);
+	    yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				year = years_list[position];
+				
+				Log.d("onItemSelected", "year: " + year);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+	    	
+	    });
+	    yearSpinner.setSelection(dAdapter.getPosition(profile.getYear()));
+
 	
 		
 		
@@ -164,21 +188,19 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	 
 	        final Course course = (Course) getChild(groupPosition, childPosition);
 	        
-	        View row = convertView;
-			if (row == null) {
+	       if (convertView == null) {
 				LayoutInflater inflater = (LayoutInflater) _context
 						.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				row = inflater.inflate(R.layout.list_course_item, parent,
-						false);
+				convertView = inflater.inflate(R.layout.list_course_item,null);
 			}
 
 			Course courseToBeDisplayed = getChild(groupPosition,childPosition);
 			String format = courseToBeDisplayed.getSubject() + " " + course.getNumber();
 
-			TextView courseTV = (TextView) row.findViewById(id.coursesListTextView);
+			TextView courseTV = (TextView) convertView.findViewById(id.coursesTextView);
 			courseTV.setText(format);
 
-			return row;	        
+			return convertView;	        
 	    }
 
 		@Override
@@ -211,11 +233,11 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	        if (convertView == null) {
 	            LayoutInflater infalInflater = (LayoutInflater) this._context
 	                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	            convertView = infalInflater.inflate(R.layout.list_group_requests_to_join, null);
+	            convertView = infalInflater.inflate(R.layout.list_courses, null);
 	        }
 	 
 	        TextView lblListHeader = (TextView) convertView
-	                .findViewById(R.id.requestsToJoinTextView);
+	                .findViewById(R.id.numberOfCoursesTextView);
 	        lblListHeader.setTypeface(null, Typeface.BOLD);
 	        lblListHeader.setText(headerTitle);
 	 
@@ -236,5 +258,48 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		
 	}
 
+	private class MySimpleArrayAdapter extends ArrayAdapter<String>
+	{
+		Context context;
+	    String[] values;
+
+	    public MySimpleArrayAdapter(Context context, String[] values) {
+	        super(context, android.R.layout.simple_spinner_item, values);
+	        this.context = context;
+	        this.values = values;
+	    }
+	    
+	    @Override
+        public View getView(int position, View convertView, ViewGroup parent) 
+        {   
+	    	return initView(position, convertView, parent);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        {   
+        	// This view starts when we click the spinner.
+        	return initView(position, convertView, parent);
+        }
+        
+        private View initView(int position, View convertView, ViewGroup parent)
+        {
+        	View row = convertView;
+            if(row == null)
+            {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = inflater.inflate(R.layout.spinner_year_item, parent, false);
+            }
+
+            String year = values[position];
+            //String year = profile.getYear();
+            //String format = course.getSubject() + " " + course.getNumber();
+            
+            TextView courseTV = (TextView) row.findViewById(id.yearSpinnerTextView);
+            courseTV.setText(year);
+
+            return row;
+        }
+	}
 	
 }
