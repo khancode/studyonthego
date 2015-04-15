@@ -202,6 +202,8 @@ public class ActiveGroupFragment extends Fragment implements OnClickListener {
 	    adapter = new MySimpleArrayAdapter(getActivity(), this.studyGroups);
 	    listView.setAdapter(adapter);
 	    
+	    Log.d(TAG, "received data!");
+	    
 //	    // Set OnItemClickListener
 //	    listView.setOnItemClickListener(new OnItemClickListener() {
 //

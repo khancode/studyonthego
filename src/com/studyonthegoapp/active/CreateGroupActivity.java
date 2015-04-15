@@ -167,7 +167,7 @@ public class CreateGroupActivity extends ActionBarActivity implements OnClickLis
 	public void onClick(View arg0) {
 		groupName = groupNameET.getText().toString();
 		description = descriptionET.getText().toString();
-		building = buildingET.getText().toString();
+		building = buildingAT.getText().toString();
 		location = locationET.getText().toString();
 		startDate = startDateET.getText().toString();
 		endDate = endDateET.getText().toString();

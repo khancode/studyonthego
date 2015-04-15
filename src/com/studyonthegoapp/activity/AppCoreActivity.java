@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.studyonthegoapp.active.ActiveGroupFragment;
 import com.studyonthegoapp.codebase.R;
+import com.studyonthegoapp.gcm.ConfigGCM;
 import com.studyonthegoapp.oop.Buildings;
 import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.Profile;
@@ -98,7 +99,12 @@ public class AppCoreActivity extends ActionBarActivity {
 	    
 	    // to get all Georgia Tech Buildings
 	    getBuildings();
+	    
+	    // Register with GCM (Google Cloud Messaging) for push notifications
+	    ConfigGCM configGCM = new ConfigGCM(this);
+	    configGCM.setUpGCM();
 	}
+	
 	
 	private void getBuildings()
 	{
@@ -110,7 +116,7 @@ public class AppCoreActivity extends ActionBarActivity {
 	{
 		//buildings.addAll(buildings_result);
 		Buildings build = new Buildings(buildings_result); 
-		System.out.println(Buildings.getBuildings());
+//		System.out.println(Buildings.getBuildings());
 		//showAlertDialog(responseCode);
 		
 	}
