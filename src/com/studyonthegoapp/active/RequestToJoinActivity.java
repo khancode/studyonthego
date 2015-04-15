@@ -52,7 +52,7 @@ public class RequestToJoinActivity extends ActionBarActivity implements OnClickL
 		lastNameTV = (TextView) findViewById(R.id.lastNameTextView);
 		coursesTV = (TextView) findViewById(R.id.coursesTextView);
 		majorTV = (TextView) findViewById(R.id.majorTextView);
-		yearTV = (TextView) findViewById(R.id.yearTextView);
+		yearTV = (TextView) findViewById(R.id.yearSpinnerTextView);
 		skillsTV = (TextView) findViewById(R.id.skillsTextView);
 		respondToRequestButton = (Button) findViewById(R.id.respondToRequestButton);
 		

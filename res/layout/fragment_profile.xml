@@ -10,7 +10,7 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/coursesListTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -67,25 +67,6 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/courses_label"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Spinner
-            android:id="@+id/courseSpinner"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
     </TableRow>
 
     <TableRow
@@ -152,25 +133,30 @@
     </TableRow>
 
     <TableRow
-        android:id="@+id/tableRow6"
+        android:id="@+id/tableRow3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
+        <ExpandableListView
+            android:id="@+id/coursesExpandableListView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+        </ExpandableListView>
+
         <TextView
-            android:id="@+id/TextView03"
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/specialization_label"
+            android:text="@string/courses_label"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <EditText
-            android:id="@+id/SpecializationEditText"
-            android:layout_width="0dp"
+        <Spinner
+            android:id="@+id/courseSpinner"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="text" />
+            android:layout_weight="1" />
     </TableRow>
 
     <TableRow
