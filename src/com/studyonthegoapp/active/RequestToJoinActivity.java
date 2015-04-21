@@ -1,6 +1,7 @@
 package com.studyonthegoapp.active;
 
 import com.studyonthegoapp.codebase.R;
+import com.studyonthegoapp.oop.Course;
 import com.studyonthegoapp.oop.Profile;
 import com.studyonthegoapp.oop.StudyGroup;
 import com.studyonthegoapp.oop.User;
@@ -63,7 +64,18 @@ public class RequestToJoinActivity extends ActionBarActivity implements OnClickL
 		usernameTV.setText(user.getUsername());
 		firstNameTV.setText(profile.getFirstName());
 		lastNameTV.setText(profile.getLastName());
-		coursesTV.setText(profile.getCourses().toString());
+		
+		String coursesStr = "";
+		Course[] courses = profile.getCourses();
+		for (int i = 0; i < courses.length; i++)
+		{
+			coursesStr += courses[i].getSubject() + " " + courses[i].getNumber();
+			
+			if (i + 1 != courses.length)
+				coursesStr += ", ";
+		}
+		coursesTV.setText(coursesStr);
+		
 		majorTV.setText(profile.getMajor());
 		yearTV.setText(profile.getYear());
 		skillsTV.setText(profile.getSkills());
