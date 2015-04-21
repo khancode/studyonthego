@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class ProfileFragment extends Fragment implements OnClickListener {
@@ -43,6 +44,10 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	private EditText majorET;
 	private Button saveProfileButton;
 	private Button cancelProfileSaveButton;
+	private Button editProfileButton;
+	
+	private TableRow saveCancelRow;
+	private TableRow editRow;
 
 	private String userName;
 	private String firstName;
@@ -75,7 +80,17 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		yearSpinner = (Spinner) view.findViewById(R.id.DegreeSpinner);
 		saveProfileButton = (Button) view.findViewById(R.id.SaveButton);
 		saveProfileButton.setOnClickListener(this);
+		cancelProfileSaveButton = (Button)view.findViewById(R.id.CancelButton);
+		cancelProfileSaveButton.setOnClickListener(this);
+		editProfileButton = (Button) view.findViewById(R.id.EditProfile);
+		editProfileButton.setOnClickListener(this);
+		saveCancelRow = (TableRow) view.findViewById(R.id.tableRow8);
 		
+		saveCancelRow.setVisibility(saveCancelRow.GONE);
+		
+		editRow = (TableRow) view.findViewById(R.id.tableRow6);
+		
+		//saveProfileButton.setVisibility(visibility);
 		coursesExpandableListView = (ExpandableListView) view.findViewById(id.coursesExpandableListView);
 		
 		firstNameET.setFocusable(false);
@@ -136,16 +151,53 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	    	
 	    });
 	    yearSpinner.setSelection(dAdapter.getPosition(profile.getYear()));
-
-	
-		
-		
 	}
+	
+	public void setFocus()
+	{
+		firstNameET.setFocusable(true);
+		lastNameET.setFocusable(true);
+		skillsET.setFocusable(true);
+		majorET.setFocusable(true);
+		//firstNameET.
+		saveCancelRow.setVisibility(saveCancelRow.VISIBLE);
+		editRow.setVisibility(editRow.GONE);
+	}
+	
+	public void removeFocus()
+	{
+		setValues();
+		firstNameET.setFocusable(false);
+		lastNameET.setFocusable(false);
+		skillsET.setFocusable(false);
+		majorET.setFocusable(false);
+		saveCancelRow.setVisibility(saveCancelRow.GONE);
+		editRow.setVisibility(editRow.VISIBLE);		
+	}
+	
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+		switch (v.getId()) {
 
+	    case R.id.EditProfile:
+	        // do your code
+	    	setFocus();
+	        break;
+
+	    case R.id.SaveButton:
+	        // do your code
+	        break;
+
+	    case R.id.CancelButton:
+	        // do your code
+	    	removeFocus();
+	        break;
+
+	    default:
+	        break;
+	    }
 	}
 
 
