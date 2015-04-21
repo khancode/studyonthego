@@ -88,9 +88,16 @@ public class AppCoreActivity extends ActionBarActivity {
 	    					 new Course(5, "CS", 3251, "B"),
 	    					 new Course(3, "CS", 2200, "B")};
 	    
-	    this.profile = new Profile(username, "Omar", "Khan", courses, "Computer Science",
-	    						   "Senior", "Java, C, Python, JavaScript, PHP, Android");
-	    
+	    if(username.equalsIgnoreCase("khancode"))
+	    {
+	    	this.profile = new Profile(username, "Omar", "Khan", courses, "Computer Science",
+					   "Senior", "Java, C, Python");
+	    }
+	    else
+	    {   
+	    	this.profile = new Profile(username, "Sonal", "Mahendru", courses, "Computer Science",
+	    						   "Master", "JavaScript, Android");
+	    }
 	    this.user = new User(username, profile);
 	    
 	    activeGroupFragment.setUserFromAppCoreActivity(user);

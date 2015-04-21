@@ -75,5 +75,7 @@
     <!-- activity_member.xml -->
     <string name="title_activity_member">Member</string>
     <string name="title_activity_sliding_tabs">SlidingTabsActivity</string>
+    <string name="cancel_profile_button_label">Cancel</string>
+    <string name="edit_profile_button_label">Edit</string>
 
 </resources>
