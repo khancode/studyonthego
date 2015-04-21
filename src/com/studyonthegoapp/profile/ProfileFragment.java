@@ -78,6 +78,12 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		
 		coursesExpandableListView = (ExpandableListView) view.findViewById(id.coursesExpandableListView);
 		
+		firstNameET.setFocusable(false);
+		lastNameET.setFocusable(false);
+		skillsET.setFocusable(false);
+		majorET.setFocusable(false);
+		
+		
 		setValues();
 		
 	
