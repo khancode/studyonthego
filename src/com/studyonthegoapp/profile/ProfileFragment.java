@@ -36,11 +36,11 @@ import android.widget.TextView;
 public class ProfileFragment extends Fragment implements OnClickListener {
 	
 	
-	private TextView userNameET;
+	private EditText userNameET;
 	private EditText firstNameET;
 	private EditText lastNameET;
 	private EditText skillsET;
-	private Spinner yearSpinner;
+	private EditText yearET;
 	private EditText majorET;
 	private Button saveProfileButton;
 	private Button cancelProfileSaveButton;
@@ -71,13 +71,13 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_profile, container,
 				false);
-		userNameET = (TextView) view.findViewById(R.id.Username);
+		userNameET = (EditText) view.findViewById(R.id.UserNameEditText);
 		firstNameET = (EditText) view.findViewById(R.id.FirstNameEditText);
 		lastNameET = (EditText) view.findViewById(R.id.LastNameEditText);
 		skillsET = (EditText) view.findViewById(R.id.SkillsEditText);
 		majorET = (EditText) view.findViewById(R.id.MajorEditText);
 		
-		yearSpinner = (Spinner) view.findViewById(R.id.DegreeSpinner);
+		yearET = (EditText) view.findViewById(R.id.YearEditText);
 		saveProfileButton = (Button) view.findViewById(R.id.SaveButton);
 		saveProfileButton.setOnClickListener(this);
 		cancelProfileSaveButton = (Button)view.findViewById(R.id.CancelButton);
@@ -93,14 +93,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		//saveProfileButton.setVisibility(visibility);
 		coursesExpandableListView = (ExpandableListView) view.findViewById(id.coursesExpandableListView);
 		
-		firstNameET.setFocusable(false);
-		lastNameET.setFocusable(false);
-		skillsET.setFocusable(false);
-		majorET.setFocusable(false);
-		
-		
-		setValues();
-		
+		removeFocus();	
 	
 
 		return view;
@@ -119,6 +112,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		lastNameET.setText(profile.getLastName());
 		majorET.setText(profile.getMajor());
 		skillsET.setText(profile.getSkills());
+		yearET.setText(profile.getYear());
 		
         // preparing list data for courses
 		listDataHeader = new ArrayList<String>();
@@ -133,32 +127,15 @@ public class ProfileFragment extends Fragment implements OnClickListener {
         
         //preparing spinner data for years
         
-        MySimpleArrayAdapter dAdapter = new MySimpleArrayAdapter(this.getActivity(), years_list);
-	    yearSpinner.setAdapter(dAdapter);
-	    yearSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				year = years_list[position];
-				
-				Log.d("onItemSelected", "year: " + year);
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				
-			}
-	    	
-	    });
-	    yearSpinner.setSelection(dAdapter.getPosition(profile.getYear()));
-	}
+       	}
 	
 	public void setFocus()
 	{
-		firstNameET.setFocusable(true);
-		lastNameET.setFocusable(true);
-		skillsET.setFocusable(true);
-		majorET.setFocusable(true);
+		firstNameET.setEnabled(true);
+		lastNameET.setEnabled(true);
+		skillsET.setEnabled(true);
+		majorET.setEnabled(true);
+		yearET.setEnabled(true);
 		//firstNameET.
 		saveCancelRow.setVisibility(saveCancelRow.VISIBLE);
 		editRow.setVisibility(editRow.GONE);
@@ -167,10 +144,12 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	public void removeFocus()
 	{
 		setValues();
-		firstNameET.setFocusable(false);
-		lastNameET.setFocusable(false);
-		skillsET.setFocusable(false);
-		majorET.setFocusable(false);
+		userNameET.setEnabled(false);
+		firstNameET.setEnabled(false);
+		lastNameET.setEnabled(false);
+		skillsET.setEnabled(false);
+		majorET.setEnabled(false);
+		yearET.setEnabled(false);
 		saveCancelRow.setVisibility(saveCancelRow.GONE);
 		editRow.setVisibility(editRow.VISIBLE);		
 	}
@@ -316,7 +295,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		
 	}
 
-	private class MySimpleArrayAdapter extends ArrayAdapter<String>
+	/*private class MySimpleArrayAdapter extends ArrayAdapter<String>
 	{
 		Context context;
 	    String[] values;
@@ -359,5 +338,5 @@ public class ProfileFragment extends Fragment implements OnClickListener {
             return row;
         }
 	}
-	
+	*/
 }

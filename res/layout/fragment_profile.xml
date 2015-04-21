@@ -2,12 +2,15 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp" >
+    android:padding="10dp"
+     >
 
     <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+       
+        android:layout_height="wrap_content" 
+        >
 
         <TextView
             android:id="@+id/coursesListTextView"
@@ -17,11 +20,13 @@
             android:text="@string/username_bold_label"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:id="@+id/Username"
+        <EditText
+            android:id="@+id/UserNameEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text" />
 
     </TableRow>
 
@@ -84,7 +89,7 @@
         <EditText
             android:id="@+id/SkillsEditText"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textMultiLine" />
@@ -103,11 +108,13 @@
             android:text="@string/year_label"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Spinner
-            android:id="@+id/DegreeSpinner"
-            android:layout_width="0dip"
+        <EditText
+            android:id="@+id/YearEditText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textMultiLine" />
     </TableRow>
 
     <TableRow
